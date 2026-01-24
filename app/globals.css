@@ -1,0 +1,126 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+::selection {
+  background-color: #02270d1f; /* e.g., Tailwind blue-300 */
+  color: rgba(2, 24, 15, 0.877); /* Optional: text color during selection */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+@layer base {
+  :root {
+    /* Base */
+    --background: 220 25% 98%;        /* Clean light canvas */
+    --foreground: 222 22% 15%;        /* Deep slate text */
+
+    /* Surfaces */
+    --card: 0 0% 100%;
+    --card-foreground: 222 22% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 22% 15%;
+
+    /* Brand (Creator Violet / Indigo) */
+    --primary: 252 85% 60%;           /* Vibrant creator purple */
+    --primary-foreground: 0 0% 100%;
+
+    /* Secondary (Cool contrast) */
+    --secondary: 220 20% 92%;
+    --secondary-foreground: 222 22% 15%;
+
+    /* Accent (Used for highlights, badges, links) */
+    --accent: 190 90% 45%;            /* Cyan pop */
+    --accent-foreground: 0 0% 100%;
+
+    /* Muted UI */
+    --muted: 220 18% 94%;
+    --muted-foreground: 220 10% 45%;
+
+    /* Destructive */
+    --destructive: 0 75% 55%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Borders & Inputs */
+    --border: 220 15% 88%;
+    --input: 220 15% 88%;
+    --ring: 252 85% 60%;
+
+    /* Charts / analytics */
+    --chart-1: 252 85% 60%;
+    --chart-2: 190 90% 45%;
+    --chart-3: 280 75% 65%;
+    --chart-4: 35 90% 55%;
+    --chart-5: 160 65% 45%;
+
+    --radius: 0.75rem; /* modern, creator-friendly */
+  }
+
+  .dark {
+    /* Background */
+    --background: 222 30% 6%;         /* Studio black */
+    --foreground: 220 20% 92%;
+
+    /* Surfaces */
+    --card: 222 28% 9%;
+    --card-foreground: 220 20% 92%;
+
+    --popover: 222 28% 10%;
+    --popover-foreground: 220 20% 92%;
+
+    /* Brand */
+    --primary: 252 90% 68%;           /* Glows nicely on dark */
+    --primary-foreground: 222 30% 6%;
+
+    /* Secondary */
+    --secondary: 222 20% 18%;
+    --secondary-foreground: 220 20% 92%;
+
+    /* Accent */
+    --accent: 190 90% 55%;
+    --accent-foreground: 222 30% 6%;
+
+    /* Muted */
+    --muted: 222 18% 14%;
+    --muted-foreground: 220 15% 60%;
+
+    /* Destructive */
+    --destructive: 0 75% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Borders & Inputs */
+    --border: 222 20% 16%;
+    --input: 222 20% 16%;
+    --ring: 252 90% 68%;
+
+    /* Charts */
+    --chart-1: 252 90% 68%;
+    --chart-2: 190 90% 55%;
+    --chart-3: 280 80% 70%;
+    --chart-4: 35 95% 60%;
+    --chart-5: 160 70% 55%;
+  }
+}
+
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}

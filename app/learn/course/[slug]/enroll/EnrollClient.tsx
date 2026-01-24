@@ -1,0 +1,544 @@
+'use client'
+
+import { useEffect, useState } from "react"
+import { useRouter, useParams } from "next/navigation"
+import { supabase } from "@/lib/supabase"
+import { useSupabase } from "@/components/providers/supabase-provider"
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "@/components/ui/accordion"
+import { Loader2, BookOpen, Clock, AlertTriangle, CheckCircle2, Users, TrendingUp, Signal, Star, Video } from "lucide-react"
+import localCourses from "@/public/data/courses.json"
+import { LessonCarousel } from "@/components/course/LessonCarousel"
+import PaymentModal from './PaymentModal'
+import { CourseHero } from "@/components/course/CourseHero"
+
+interface CourseMedia {
+  id: number
+  course_id: number
+  type: 'intro' | 'lesson' | 'trailer'
+  provider: 'youtube'
+  url: string
+}
+
+interface Course {
+  id: number
+  title: string
+  slug: string
+  description: string
+  category: string
+  level: string
+  estimated_hours: number
+  requirements?: string
+  skills?: string
+  students?: number
+  rating?: number
+  hero_image?: string
+  is_paid?: boolean
+  lessons?: {
+    id: number
+    title: string
+    description?: string
+    estimated_time?: number
+    topics: string[],
+    step_order?: number
+  }[]
+  media?: CourseMedia[]
+}
+
+interface Instructor {
+  id: number
+  name: string
+  role: string
+  avatar: string
+}
+
+interface Review {
+  id: number
+  user: string
+  rating: number
+  comment: string
+}
+
+export default function EnrollClient({ slug }: { slug: string }) {
+  const router = useRouter()
+  const { user, loading: userLoading } = useSupabase()
+  const [course, setCourse] = useState<Course | null>(null)
+  const [status, setStatus] = useState<"idle" | "checking" | "enrolled" | "already" | "error">("idle")
+  const [loading, setLoading] = useState(true)
+
+  const dummyInstructors: Instructor[] = [
+    { id: 1, name: "Alice Johnson", role: "Lead Instructor", avatar: "../../../../public/assets/images/instructors/avatar.jpg" },
+    { id: 2, name: "Bob Smith", role: "Assistant Instructor", avatar: "/avatars/avatar2.jpg" },
+    { id: 3, name: "Carol Lee", role: "Guest Lecturer", avatar: "/avatars/avatar3.jpg" },
+  ]
+
+  const dummyReviews: Review[] = [
+    { id: 1, user: "John D.", rating: 5, comment: "Amazing course, learned a lot!" },
+    { id: 2, user: "Mary S.", rating: 4, comment: "Well structured and easy to follow." },
+    { id: 3, user: "Ahmed K.", rating: 5, comment: "Highly recommend this course!" },
+  ]
+
+  const [showPaymentModal, setShowPaymentModal] = useState(false)
+  const [showConfirmModal, setShowConfirmModal] = useState(false)
+  const [isEnrolled, setIsEnrolled] = useState(false)
+
+  const extractYouTubeId = (url: string) => {
+    const match = url.match(
+      /(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([^&?/]+)/
+    )
+    return match?.[1] || null
+  }
+
+  // Fetch course data
+  useEffect(() => {
+    if (!slug) return
+
+    // Fetch from Supabase
+    const fetchCourse = async () => {
+      setLoading(true)
+      const { data, error } = await supabase
+        .from("courses")
+        .select("*, lessons(*), course_media(*)")
+        .eq("slug", slug)
+        .single()
+
+
+      if (!error && data) {
+        setCourse({
+          id: data.id,
+          title: data.title,
+          slug: data.slug,
+          description: data.description || "",
+          hero_image: data.hero_image || "/assets/images/default.jpg",
+          category: data.category,
+          level: data.level,
+          estimated_hours: data.estimated_hours || 0,
+          requirements: data.requirements || "Basic",
+          skills: data.skills || "",
+          students: data.students || 0,
+          rating: data.rating || 0,
+          is_paid: Boolean(data.is_paid),
+          lessons: (data.lessons || []).map((lesson: any) => ({
+            id: lesson.id,
+            title: lesson.title,
+            description: lesson.description,
+            estimated_time: lesson.estimated_time,
+            topics: lesson.topics,
+            step_order: lesson.step_order,
+          })),
+          media: data.course_media || [],
+        })
+      }
+      setLoading(false)
+    }
+
+    fetchCourse()
+  }, [slug])
+
+  // Check existing enrollment so we can show a Go To Course CTA immediately
+  useEffect(() => {
+    const checkEnrollment = async () => {
+      if (!user || !course) return
+      const { data, error } = await supabase
+        .from("course_enrollments")
+        .select("id")
+        .eq("user_id", user.id)
+        .eq("course_id", course.id)
+        .maybeSingle()
+      if (!error) {
+        setIsEnrolled(Boolean(data))
+        if (data) setStatus("already")
+      }
+    }
+    checkEnrollment()
+  }, [user, course])
+
+
+  const handleEnroll = async () => {
+    if (!user) {
+      localStorage.setItem("redirectAfterLogin", `/learn/course/${slug}/`)
+      router.push("/login")
+      return
+    }
+
+    if (!course) return
+    setStatus("checking")
+
+    try {
+      // 1️⃣ Check if already enrolled
+      const { data: existingEnrollment, error: existingError } = await supabase
+        .from("course_enrollments")
+        .select("id")
+        .eq("user_id", user.id)
+        .eq("course_id", course.id)
+        .maybeSingle()
+
+      if (existingError) throw existingError
+
+      if (existingEnrollment) {
+        setStatus("already")
+        return
+      }
+
+      // 2️⃣ Create new enrollment
+      const { data: enrollment, error: enrollError } = await supabase
+        .from("course_enrollments")
+        .insert({
+          user_id: user.id,
+          course_id: course.id,
+        })
+        .select("id")
+        .single()
+
+      if (enrollError) throw enrollError
+
+      // 3️⃣ Initialize progress
+      const { error: progressError } = await supabase
+        .from("course_progress")
+        .insert({
+          enrollment_id: enrollment.id,
+          progress_percentage: 0,
+          completed: false,
+        })
+
+      if (progressError) throw progressError
+
+      // 4️⃣ Success — show status and redirect
+      setStatus("enrolled")
+      setIsEnrolled(true)
+
+      setTimeout(() => {
+        router.push(`/learn/course/${slug}/lesson/1`)
+      }, 2000)
+    } catch (error: any) {
+      console.error("Enrollment failed:", error)
+      setStatus("error")
+    }
+  }
+
+
+  const handleEnrollClick = async () => {
+    if (!user) {
+      localStorage.setItem(
+        "redirectAfterLogin",
+        `/learn/course/${slug}/`
+      )
+      router.push("/login")
+      return
+    }
+
+    if (!course) return
+
+    setStatus("checking")
+
+    const { data: existing, error } = await supabase
+      .from("course_enrollments")
+      .select("id")
+      .eq("user_id", user.id)
+      .eq("course_id", course.id)
+      .maybeSingle()
+
+    if (error) {
+      console.error(error)
+      setStatus("error")
+      return
+    }
+
+    if (existing) {
+      setStatus("already")
+      return
+    }
+
+    setStatus("idle")
+    if (course.is_paid) {
+      setShowPaymentModal(true)
+    } else {
+      setShowConfirmModal(true)
+    }
+  }
+
+
+  if (!course)
+    return (
+      <div className="flex justify-center items-center min-h-[50vh] text-muted-foreground">
+        <Loader2 className="h-6 w-6 animate-spin mr-2" /> Loading course info...
+      </div>
+    )
+
+  const introVideo = course.media?.find(
+    (m) => m.type === "intro" && m.provider === "youtube"
+  )
+
+
+  return (
+    <div className="container mx-auto pt-0 pb-8 flex flex-col md:flex-row gap-12">
+      {/* Left Column: Course Details */}
+      <div className="flex-1 space-y-8 px-4 pb-4 pt-0 md:px-8">
+        {/* Hero */}
+        <h1 className="text-xl md:text-4xl mt-2 font-bold">{course.title}</h1>
+        <CourseHero
+          videoUrl={introVideo?.url}
+          poster={course.hero_image || "/assets/images/default.jpg"}
+          title={course.title}
+          description={course.description}
+        />
+
+        {/* Course Info */}
+        <div className="flex flex-wrap gap-4 jtext-sm text-gray-700 dark:text-gray-300">
+          <span className="flex items-center gap-1"><TrendingUp className="w-4 h-4" /> {course.category}</span>
+          <span className="flex items-center gap-1"><Signal className="w-4 h-4" /> {course.level}</span>
+          <span className="flex items-center gap-1"><Clock className="w-4 h-4" /> {course.estimated_hours} hrs</span>
+          <span className="flex items-center gap-1"><Users className="w-4 h-4" /> {course.students?.toLocaleString() || 0} students</span>
+          <span className="flex items-center gap-1"><Star className="w-4 h-4 text-yellow-400" /> {course.rating || 0}</span>
+        </div>
+
+
+        <div className="space-y-12 border border-border p-6">
+
+          {/* About course */}
+          <div>
+            <h2 className="text-2xl font-bold mb-4">📚 About this Course</h2>
+            <p>{course.description}</p>
+          </div>
+
+          {/* {Course requirement} */}
+          <div>
+            <h2 className="text-2xl font-bold mb-4">🛠 Course Requirements</h2>
+            <p>{course.requirements || "No specific prerequisites required."}</p>
+          </div>
+
+          {/* Lessons Accordion */}
+          {course.lessons && course.lessons.length > 0 && (
+            <div>
+              <h2 className="text-2xl font-bold mb-4 flex items-center gap-2 mt-2"><BookOpen className="w-6 h-6" /> Lessons</h2>
+              <Accordion type="single" collapsible={false} className="space-y-2">
+                {course.lessons.map((lesson) => (
+                  <AccordionItem key={lesson.id} value={String(lesson.id)}>
+                    <AccordionTrigger className="font-semibold">{lesson.step_order}. {lesson.title}</AccordionTrigger>
+                    <AccordionContent>
+                      {lesson.description && (
+                        <p className="text-sm mb-2 text-muted-foreground">{lesson.description}</p>
+                      )}
+
+                      {lesson.topics && Object.keys(lesson.topics).length > 0 && (
+                        <ul className="space-y-1 list-none">
+                          {Object.entries(lesson.topics).map(([topicTitle, topicDesc]) => (
+                            <li key={topicTitle} className="flex flex-col gap-1 hover:bg-primary/10 cursor-pointer dark:hover:bg-gray-800 p-2 rounded">
+                              <span className="flex items-center gap-2">
+                                <Video className="w-4 h-4 text-primary" />
+                                <span className="ml-6 text-sm text-muted-foreground">{topicDesc}</span>
+                              </span>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </AccordionContent>
+
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </div>
+          )}
+
+          {/* Instructors Carousel */}
+          <div>
+            <h2 className="text-2xl font-bold my-6">👨‍🏫 Instructors</h2>
+            <div className="flex gap-4 overflow-x-auto pb-2">
+              {dummyInstructors.map((inst) => (
+                <div key={inst.id} className="flex-shrink-0 w-40 p-4 border rounded-lg shadow">
+                  <img src={inst.avatar} alt={inst.name} className="w-16 h-16 rounded-full mx-auto mb-2 object-cover" />
+                  <h3 className="text-center font-semibold">{inst.name}</h3>
+                  <p className="text-center text-sm text-gray-500">{inst.role}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Reviews */}
+          <div>
+            <h2 className="text-2xl font-bold mb-4">⭐ Reviews</h2>
+            <div className="space-y-4">
+              {dummyReviews.map((rev) => (
+                <Card key={rev.id}>
+                  <CardContent>
+                    <div className="flex justify-between items-center mb-2">
+                      <p className="font-semibold">{rev.user}</p>
+                      <span className="flex items-center gap-1">
+                        <Star className="w-4 h-4 text-yellow-400" /> {rev.rating}
+                      </span>
+                    </div>
+                    <p>{rev.comment}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+
+          {/* FAQ */}
+          <div>
+            <h2 className="text-2xl font-bold mb-4">❓ Frequently Asked Questions</h2>
+            <Accordion type="single" collapsible className="space-y-2">
+              <AccordionItem value="q1">
+                <AccordionTrigger>What is the duration of the course?</AccordionTrigger>
+                <AccordionContent>The course is designed to be completed in approximately {course.estimated_hours} hours, but you can take it at your own pace.</AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="q2">
+                <AccordionTrigger>Are there any prerequisites?</AccordionTrigger>
+                <AccordionContent>{course.requirements || "No specific prerequisites required."}</AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="q3">
+                <AccordionTrigger>Will I receive a certificate upon completion?</AccordionTrigger>
+                <AccordionContent>Yes, upon successful completion of the course, you will receive a certificate to showcase your achievement.</AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </div>
+        </div>
+
+
+      </div>
+
+      {/* Right Column: Sticky Enrollment */}
+      <div className="md:w-[30%] sticky top-24 self-start space-y-4">
+
+        <Card
+          className="
+            p-4
+            border
+            border-border
+            shadow-[0_1px_0_hsl(30_15%_12%),0_10px_30px_hsl(28_30%_2%/0.7)]
+            dark:shadow-[0_1px_0_hsl(30_15%_10%),0_16px_40px_hsl(28_30%_1%/0.8)]
+          "
+        >
+
+          {/* Overview / Requirements / Skills */}
+          <div className="space-y-4 my-6">
+            <div>
+              <h2 className="font-semibold text-lg">📘 Overview</h2>
+              <p>{course.description}</p>
+            </div>
+
+            <div>
+              <h2 className="font-semibold text-lg">🧠 Requirements</h2>
+              <p>{course.requirements || "No specific prerequisites required."}</p>
+            </div>
+
+            <div>
+              <h2 className="font-semibold text-lg">💡 Skills You’ll Gain</h2>
+              {course.skills ? (
+                <ul className="list-disc list-inside space-y-1">
+                  {course.skills.split(",").map((skill) => (
+                    <li key={skill.trim()}>{skill.trim()}</li>
+                  ))}
+                </ul>
+              ) : <p>No specific skills listed.</p>}
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-4">
+            {isEnrolled ? (
+              <Button
+                onClick={() => router.push(`/learn/course/${slug}/lesson/1`)}
+                className="w-full text-lg font-semibold"
+              >
+                ወደ ስልጠናው ቀጥል
+              </Button>
+            ) : (
+              <Button
+                onClick={handleEnrollClick}
+                className="w-full text-lg font-semibold shadow-[0_2px_8px_rgba(37,99,235,0.4)]"
+                disabled={status === "checking"}
+              >
+                {status === "checking" ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <Loader2 className="h-5 w-5 animate-spin" /> Processing...
+                  </span>
+                ) : (
+                  "ስልጠናውር ለመጀመር"
+                )}
+              </Button>
+            )}
+
+            {user && user?.user_metadata?.role !== 'lawyer' && !isEnrolled && (
+              <p className="text-center text-sm text-red-500">ለመመዝገብ የህግ ጠበቃ መሆን አለብዎት።</p>
+            )}
+
+            {!isEnrolled && status === "enrolled" && (
+              <div className="flex flex-col items-center space-y-1 text-green-600">
+                <CheckCircle2 className="w-6 h-6" />
+                <p>ተመዝግበዋል! ወደ ስልጠናው ቀጥል ...</p>
+              </div>
+            )}
+            {!isEnrolled && status === "already" && (
+              <div className="flex flex-col items-center space-y-1 text-blue-600">
+                <CheckCircle2 className="w-6 h-6" />
+                <p>አስቀድሞ ተመዝግበዋል።</p>
+                <Button onClick={() => router.push(`/learn/course/${slug}/lesson/1`)}>ወደ ስልጠናው ቀጥል</Button>
+              </div>
+            )}
+            {status === "error" && (
+              <div className="flex flex-col items-center space-y-1 text-red-600">
+                <AlertTriangle className="w-6 h-6" />
+                <p>Something went wrong. Please try again.</p>
+              </div>
+            )}
+          </div>
+        </Card>
+      </div>
+
+      {loading && (
+        <p className="text-center text-sm text-gray-500 mt-4">Refreshing data...</p>
+      )}
+
+      {course && (
+        <PaymentModal
+          open={showPaymentModal}
+          course={course}
+          onClose={() => setShowPaymentModal(false)}
+          onPaymentSuccess={() => {
+            setShowPaymentModal(false)
+            handleEnroll()
+          }}
+        />
+      )}
+
+      {/* Free course confirmation */}
+      <AlertDialog open={showConfirmModal} onOpenChange={setShowConfirmModal}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Start this course?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This course is free. We'll enroll you and initialize your progress.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={() => setShowConfirmModal(false)}>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => {
+                setShowConfirmModal(false)
+                handleEnroll()
+              }}
+            >
+              Enroll
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </div>
+  )
+}

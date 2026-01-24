@@ -1,0 +1,176 @@
+[
+  {
+    "id": 1,
+    "slug": "digital-marketing-fundamentals",
+    "title": "የዲጂታል ማርኬቲንግ መሠረታዊ ነጥቦች",
+    "description": "የዲጂታል ማርኬቲንግ መሠረቶችን ይማሩ።",
+    "image": "https://fnnhrbhwacgyqpxynimj.supabase.co/storage/v1/object/public/course-Thumbnail/courceT2.jpg",
+    "category": "ማርኬቲንግ",
+    "level": "ጀማሪ",
+    "estimated_hours": "50",
+    "students": 1240,
+    "rating": 4.8,
+    "lessons_preview": [
+      {
+        "id": 1,
+        "title": "የዲጂታል ማርኬቲንግ መግቢያ",
+        "time": 30
+      },
+      {
+        "id": 2,
+        "title": "የSEO መሠረቶች",
+        "time": 45
+      },
+      {
+        "id": 3,
+        "title": "የማህበራዊ ሚዲያ ማርኬቲንግ",
+        "time": 40
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "slug": "web-development-bootcamp",
+    "title": "የዌብ ልማት ቡትካምፕ",
+    "description": "ዘመናዊ የዌብ ልማትን በሙሉ ይማሩ።",
+    "image": "https://fnnhrbhwacgyqpxynimj.supabase.co/storage/v1/object/public/course-Thumbnail/courceT2.jpg",
+    "category": "ልማት",
+    "level": "መካከለኛ",
+    "estimated_hours": "50",
+    "students": 2150,
+    "rating": 4.9,
+    "lessons_preview": [
+      {
+        "id": 1,
+        "title": "የHTML እና CSS መሠረቶች",
+        "time": 60
+      },
+      {
+        "id": 2,
+        "title": "የJavaScript መሠረታዊ ነገሮች",
+        "time": 75
+      },
+      {
+        "id": 3,
+        "title": "የReact መግቢያ",
+        "time": 90
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "slug": "business-management-essentials",
+    "title": "የንግድ አስተዳደር መሠረታዊ ነገሮች",
+    "description": "ንግድን በትክክል ለመቆጣጠር የሚያስፈልጉ መሠረቶችን ይማሩ።",
+    "image": "https://fnnhrbhwacgyqpxynimj.supabase.co/storage/v1/object/public/course-Thumbnail/courceT2.jpg",
+    "category": "ንግድ",
+    "level": "ጀማሪ",
+    "estimated_hours": "50",
+    "students": 0,
+    "rating": 0,
+    "lessons_preview": [
+      {
+        "id": 1,
+        "title": "የንግድ አስተዳደር መግቢያ",
+        "time": 35
+      },
+      {
+        "id": 2,
+        "title": "መሪነት እና ስትራቴጂ",
+        "time": 50
+      },
+      {
+        "id": 3,
+        "title": "ፋይናንስ እና ኦፕሬሽኖች",
+        "time": 45
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "slug": "graphics-design-masterclass",
+    "title": "የግራፊክ ዲዛይን ማስተርክላስ",
+    "description": "የግራፊክ ዲዛይን መሳሪያዎችን እና ቴክኒኮችን በሙሉ ይማሩ።",
+    "image": "https://fnnhrbhwacgyqpxynimj.supabase.co/storage/v1/object/public/course-Thumbnail/courceT2.jpg",
+    "category": "ዲዛይን",
+    "level": "መካከለኛ",
+    "estimated_hours": "50",
+    "students": 0,
+    "rating": 0,
+    "lessons_preview": [
+      {
+        "id": 1,
+        "title": "የግራፊክ ዲዛይን መግቢያ",
+        "time": 40
+      },
+      {
+        "id": 2,
+        "title": "የAdobe መሳሪያዎች ሙያ",
+        "time": 60
+      },
+      {
+        "id": 3,
+        "title": "ፈጠራዊ ፕሮጀክቶች",
+        "time": 50
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "slug": "data-analysis-with-python",
+    "title": "በPython የዳታ ትንታኔ",
+    "description": "በPython ፕሮግራሚንግ ዳታን ትንታኔ ያድርጉ እና ግንዛቤ ያግኙ።",
+    "image": "https://fnnhrbhwacgyqpxynimj.supabase.co/storage/v1/object/public/course-Thumbnail/courceT2.jpg",
+    "category": "ዳታ ሳይንስ",
+    "level": "መካከለኛ",
+    "estimated_hours": "50",
+    "students": 0,
+    "rating": 0,
+    "lessons_preview": [
+      {
+        "id": 1,
+        "title": "ለዳታ ትንታኔ Python",
+        "time": 45
+      },
+      {
+        "id": 2,
+        "title": "ዳታ ማጽዳት እና መቀየር",
+        "time": 50
+      },
+      {
+        "id": 3,
+        "title": "የዳታ ምስል አቀራረብ",
+        "time": 55
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "slug": "project-management-professional",
+    "title": "የፕሮጀክት አስተዳደር ባለሙያ",
+    "description": "ለፕሮፌሽናል የፕሮጀክት አስተዳደር ማረጋገጫ ይዘጋጁ እና ምርጥ ልምዶችን ይማሩ።",
+    "image": "https://fnnhrbhwacgyqpxynimj.supabase.co/storage/v1/object/public/course-Thumbnail/courceT2.jpg",
+    "category": "አስተዳደር",
+    "level": "ከፍተኛ",
+    "estimated_hours": "50",
+    "students": 0,
+    "rating": 0,
+    "lessons_preview": [
+      {
+        "id": 1,
+        "title": "የፕሮጀክት አስተዳደር መሠረቶች",
+        "time": 40
+      },
+      {
+        "id": 2,
+        "title": "እቅድ እና አደጋ አስተዳደር",
+        "time": 50
+      },
+      {
+        "id": 3,
+        "title": "Agile እና ፕሮፌሽናል ልምዶች",
+        "time": 45
+      }
+    ]
+  }
+]
