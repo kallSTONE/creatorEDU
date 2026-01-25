@@ -5,7 +5,7 @@ import ArticleGrid from '@/components/home/article-grid'
 import SuccessStories from '@/components/home/success-stories'
 import NewsletterSignup from '@/components/home/newsletter-signup'
 import Image from 'next/image'
-import BgL1 from '@/public/assets/images/lawST2-.png'
+import BgL1 from '@/public/assets/images/logo1.png'
 import HeroVideo from '@/components/home/HeroVideo'
 
 
@@ -16,22 +16,22 @@ export default function Home() {
       <section className="relative flex flex-col items-center w-full overflow-hidden bg-gradient-to-r from-background via-blue-900/15 dark:via-blue-900/20 to-transparent py-2 pl-12 pr-6">
 
         {/* Mobile image */}
-        <div className="z-10 md:hidden h-[300px] overflow-hidden">
+        <div className="z-10 pt-6">
           <Image
             src={BgL1}
             draggable={false}
             alt="Tesfa Logo"
-            className="h-[400px] w-auto rounded-l-[150px] rounded-r-[50px]"
+            className="h-36 w-auto opacity-60"
           />
         </div>
 
         {/* Text */}
-        <div className="z-10 py-12 text-center md:py-20 md:w-[55%]">
-          <h1 className="font-montserrat text-3xl font-bold tracking-tight md:text-5xl lg:text-6xl">
+        <div className="z-10 py-6 text-center md:py-20 md:w-[55%]">
+          <h1 className="font-montserrat text-3xl font-bold tracking-tight md:text-5xl lg:text-6xl select-none">
             ስለ አንድ ክሪየተር / ኢንፍሉንሰር የተሰራ ስልጠና
           </h1>
 
-          <p className="mt-4 text-lg text-muted-foreground md:text-xl">
+          <p className="mt-4 text-lg text-muted-foreground md:text-xl select-none">
             ይህ መድረክ በአንድ ክሪየተር ወይም ኢንፍሉንሰር የተሰጠ ስልጠናዎችን ይሰጣል።
           </p>
 
@@ -43,7 +43,7 @@ export default function Home() {
         </div>
 
         {/* Hero Video (desktop only) */}
-        <div className="z-10 hidden w-full justify-center py-12 md:flex">
+        <div className="z-10 w-full justify-center py-12 md:flex">
           <HeroVideo />
         </div>
 
