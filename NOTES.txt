@@ -1,5 +1,5 @@
 better style the button (Join Khlix)
 auto scroll carousel with "our instructors are trusted by"
 testimonies section with videos
-
+mute unmute text on the custom video button
 video of cretors talking alternating (Yonas Moh, Mikiyas, and others with good social media following)

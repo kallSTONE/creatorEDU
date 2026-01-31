@@ -14,7 +14,7 @@ interface Course {
   image: string
   category: string
   creator: Creator
-  available: boolean
+  published: boolean
   available_label?: string
 }
 
@@ -39,7 +39,7 @@ export default function CourseCarousel() {
           description: c.description,
           image: c.hero_image || '/assets/images/default.jpg',
           category: c.category,
-          available: c.available ?? false,
+          published: c.published ?? false,
           available_label: c.available_label,
         })
       )
@@ -51,7 +51,7 @@ export default function CourseCarousel() {
   }, [])
 
   return (
-    <main>
+    <main className="w-full py-12 space-y-8 border border-red-900">
       {courses.map((course) => (
         <CourseSection key={course.id} course={course} />
       ))}

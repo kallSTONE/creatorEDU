@@ -100,8 +100,8 @@ export default function Home() {
 
       {/* Featured Courses Section */}
       <section className="py-16 bg-background w-full">
-        <div className=" container px-16 ">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 ">
+        <div className=" w-full border border-red-900 ">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 px-16">
             <div>
               <h2 className="text-3xl font-montserrat font-bold">የተመረጡ ስልጠናዎች</h2>
               <p className="text-muted-foreground mt-2">
