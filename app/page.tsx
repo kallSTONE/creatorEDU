@@ -15,16 +15,6 @@ export default function Home() {
       {/* Hero Section */}
       <section className="relative flex flex-col items-center w-full overflow-hidden bg-gradient-to-r from-background via-blue-900/15 dark:via-blue-900/20 to-transparent py-2 pl-12 pr-6">
 
-        {/* Mobile image */}
-        <div className="z-10 pt-6">
-          <Image
-            src={BgL1}
-            draggable={false}
-            alt="Tesfa Logo"
-            className="h-36 w-auto opacity-60"
-          />
-        </div>
-
         {/* Text */}
         <div className="z-10 py-6 text-center md:py-20 md:w-[55%]">
           <h1 className="font-montserrat text-3xl font-bold tracking-tight md:text-5xl lg:text-6xl select-none">
@@ -36,10 +26,26 @@ export default function Home() {
           </p>
 
           <div className="mt-6">
-            <Button size="lg" asChild>
-              <Link href="/learn">Explore programs</Link>
+            <Button
+              size="lg"
+              asChild
+              className="
+                relative overflow-hidden
+                bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500
+                text-white font-semibold
+                shadow-lg shadow-purple-500/30
+                transition-all duration-300 ease-out
+                hover:scale-105 hover:shadow-xl hover:shadow-purple-500/50
+                active:scale-95
+                focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:ring-offset-2
+              "
+            >
+              <Link href="/learn" className="relative z-10 px-8 py-4">
+                Explore programs →
+              </Link>
             </Button>
           </div>
+
         </div>
 
         {/* Hero Video (desktop only) */}
@@ -50,28 +56,46 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-r from-blue-900/10 via-background to-transparent" />
       </section>
 
-      {/* Performance */}
-      <section className="py-10 my-2 w-full flex flex-col bg-gradient-to-r from-background via-blue-900/15 dark:via-blue-900/20 to-transparent ">
+      {/* Trusted By */}
+      <section className="py-12 my-2 w-full bg-gradient-to-r from-background via-blue-900/15 dark:via-blue-900/20 to-transparent overflow-hidden">
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 bg-grey-900/20 p-6 rounded-lg ">
-          <div className="text-center">
-            <p className="text-3xl font-bold">50</p>
-            <p className="text-sm text-muted-foreground">ስልጠናዎች</p>
-          </div>
-          <div className="text-center">
-            <p className="text-3xl font-bold">2ሺህ</p>
-            <p className="text-sm text-muted-foreground">ባለሙያዎች</p>
-          </div>
-          <div className="text-center">
-            <p className="text-3xl font-bold">100</p>
-            <p className="text-sm text-muted-foreground">አሰልጣኞች</p>
-          </div>
-          <div className="text-center">
-            <p className="text-3xl font-bold">50</p>
-            <p className="text-sm text-muted-foreground">ሰርተፊኬቶች</p>
+        <h2 className="text-center text-xl sm:text-2xl font-semibold mb-8">
+          Our instructors are trusted by
+        </h2>
+
+        <div className="relative w-full overflow-hidden">
+          {/* Scrolling container */}
+          <div className="flex w-max animate-scroll gap-12 px-6">
+            {[
+              "/logos/google.svg",
+              "/logos/microsoft.svg",
+              "/logos/amazon.svg",
+              "/logos/meta.svg",
+              "/logos/netflix.svg",
+              "/logos/apple.svg",
+              // duplicate for seamless loop
+              "/logos/google.svg",
+              "/logos/microsoft.svg",
+              "/logos/amazon.svg",
+              "/logos/meta.svg",
+              "/logos/netflix.svg",
+              "/logos/apple.svg",
+            ].map((logo, index) => (
+              <div
+                key={index}
+                className="flex items-center justify-center min-w-[140px] opacity-80 hover:opacity-100 transition"
+              >
+                <img
+                  src={logo}
+                  alt="Company logo"
+                  className="h-10 w-auto object-contain"
+                />
+              </div>
+            ))}
           </div>
         </div>
       </section>
+
 
 
       {/* Featured Courses Section */}
