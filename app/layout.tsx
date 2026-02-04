@@ -3,11 +3,11 @@ import type { Metadata } from 'next';
 import { Inter, Montserrat } from 'next/font/google';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Toaster } from '@/components/ui/toaster';
-import Header from '@/components/layout/header';
+import AuthHeader from '@/components/layout/auth-header';
 import Footer from '@/components/layout/footer';
 import { SupabaseProvider } from '@/components/providers/supabase-provider';
 
-const inter = Inter({ 
+const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
 });
@@ -18,7 +18,7 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: 'ዋርካ - የ ስልጠና ፖርታል',
+  title: 'Learn - From Any Place',
   description: 'A comprehensive portal for Training Mandatory for license renewal for Ethiopian Legal professionals, training, and resources for continuing professional development.',
 
   icons: {
@@ -36,11 +36,11 @@ export default function RootLayout({
       <body className={`${inter.variable} ${montserrat.variable} font-sans min-h-screen flex flex-col`}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="light"
+          defaultTheme="dark"
           enableSystem
         >
           <SupabaseProvider>
-            {/* <Header /> */}
+            <AuthHeader />
             <main className="flex-grow w-full">
               {children}
             </main>

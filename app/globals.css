@@ -24,9 +24,9 @@ html {
 }
 
 ::selection {
-  background-color: #ebebf01f;
+  background-color: #1515fd1f;
   /* e.g., Tailwind blue-300 */
-  color: rgba(3, 4, 114, 0.877);
+  color: rgba(192, 147, 1, 0.281);
   /* Optional: text color during selection */
 }
 

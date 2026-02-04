@@ -4,12 +4,30 @@ import CourseCarousel from '@/components/home/course-carousel'
 import ArticleGrid from '@/components/home/article-grid'
 import SuccessStories from '@/components/home/success-stories'
 import NewsletterSignup from '@/components/home/newsletter-signup'
-import Image from 'next/image'
-import BgL1 from '@/public/assets/images/logo1.png'
 import HeroVideo from '@/components/home/HeroVideo'
 
 
 export default function Home() {
+  const companyLogos = [
+    { file: 'Addis Ababa University Logo.png', name: 'Addis Ababa University' },
+    { file: 'Amole Logo.png', name: 'Amole' },
+    { file: 'Awash International Bank Logo.svg', name: 'Awash International Bank' },
+    { file: 'Bank of Abyssinia Logo.svg', name: 'Bank of Abyssinia' },
+    { file: 'blueMoon Logo.svg', name: 'BlueMoon' },
+    { file: 'CBE Birr ( No background ) Logo.svg', name: 'CBE Birr' },
+    { file: 'Chapa Logo.svg', name: 'Chapa' },
+    { file: 'Commercial Bank of Ethiopia Logo.png', name: 'Commercial Bank of Ethiopia' },
+    { file: 'Dashen Bank Logo.png', name: 'Dashen Bank' },
+    { file: 'Ethio Telecom Logo.svg', name: 'Ethio Telecom' },
+    { file: 'Gasha Digital Logo.svg', name: 'Gasha Digital' },
+    { file: 'Hibret Bank Logo.png', name: 'Hibret Bank' },
+    { file: 'Hibret Bank Logo.svg', name: 'Hibret Bank' },
+    { file: 'iceaddis Logo.svg', name: 'iceaddis' },
+    { file: 'Loline Mag Logo.png', name: 'Loline Mag' },
+    { file: 'Ministry of Transport Logo.png', name: 'Ministry of Transport' },
+    { file: 'Office of The Prime Minister Logo.png', name: 'Office of the Prime Minister' },
+  ]
+
   return (
     <div className="flex flex-col sm:items-center">
       {/* Hero Section */}
@@ -66,28 +84,14 @@ export default function Home() {
         <div className="relative w-full overflow-hidden">
           {/* Scrolling container */}
           <div className="flex w-max animate-scroll gap-12 px-6">
-            {[
-              "/logos/google.svg",
-              "/logos/microsoft.svg",
-              "/logos/amazon.svg",
-              "/logos/meta.svg",
-              "/logos/netflix.svg",
-              "/logos/apple.svg",
-              // duplicate for seamless loop
-              "/logos/google.svg",
-              "/logos/microsoft.svg",
-              "/logos/amazon.svg",
-              "/logos/meta.svg",
-              "/logos/netflix.svg",
-              "/logos/apple.svg",
-            ].map((logo, index) => (
+            {[...companyLogos, ...companyLogos].map((logo, index) => (
               <div
                 key={index}
                 className="flex items-center justify-center min-w-[140px] opacity-80 hover:opacity-100 transition"
               >
                 <img
-                  src={logo}
-                  alt="Company logo"
+                  src={encodeURI(`/assets/images/companyLogos/${logo.file}`)}
+                  alt={`${logo.name} logo`}
                   className="h-10 w-auto object-contain"
                 />
               </div>
@@ -97,10 +101,9 @@ export default function Home() {
       </section>
 
 
-
       {/* Featured Courses Section */}
       <section className="py-16 bg-background w-full">
-        <div className=" w-full border border-red-900 ">
+        <div className=" w-full">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 px-16">
             <div>
               <h2 className="text-3xl font-montserrat font-bold">የተመረጡ ስልጠናዎች</h2>
@@ -116,6 +119,7 @@ export default function Home() {
           <CourseCarousel />
         </div>
       </section>
+
 
       {/* Latest Articles Section */}
       <section className="p-16 bg-muted/30 w-full">
@@ -136,6 +140,7 @@ export default function Home() {
         </div>
       </section>
 
+
       {/* Success Stories Section */}
       <section className="py-16 bg-background">
         <div className="container">
@@ -149,6 +154,7 @@ export default function Home() {
           <SuccessStories />
         </div>
       </section>
+
 
       {/* Newsletter Section */}
       <section className="py-16 bg-primary w-full text-primary-foreground">

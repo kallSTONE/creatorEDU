@@ -31,12 +31,12 @@ export default function HeroVideo() {
     if (!containerRef.current) return
 
     playerRef.current = new window.YT.Player(containerRef.current, {
-      videoId: 'sia3pPtCTdk',
+      videoId: 'mSs5scC7hsI',
       playerVars: {
         autoplay: 1,
         mute: 1,
         loop: 1,
-        playlist: 'sia3pPtCTdk',
+        playlist: 'mSs5scC7hsI',
         controls: 0,
         rel: 0,
         modestbranding: 1,
@@ -70,7 +70,7 @@ export default function HeroVideo() {
       {/* Custom mute button */}
       <button
         onClick={toggleMute}
-        className="relative h-10 w-fit flex flex-row justify-center items-center z-112 rounded-full bg-black/50 p-2 text-white/87 hover:bg-black/85 transition"
+        className="relative mt-2 ml-2 h-10 w-fit flex flex-row justify-center items-center z-112 rounded-full bg-black/50 p-4 text-white/87 hover:bg-black/85 transition"
         aria-label={muted ? 'Unmute video' : 'Mute video'}
       >
         {muted ? '🔇 unmute' : '🔊 mute'}

@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { ChevronLeft, ChevronRight, Download } from "lucide-react"
 import { supabase } from "@/lib/supabase"
+import YouTubePlayer from "@/components/display/YouTubePlayer"
 
 interface LessonContentProps {
   lessonNumber: string
@@ -59,12 +60,6 @@ export function LessonContent({
   const [submitting, setSubmitting] = useState(false)
 
   const currentQuestion = questions[currentQuestionIndex]
-
-  function extractYouTubeId(url: string) {
-    const regExp = /(?:youtube\.com\/.*v=|youtu\.be\/)([^&]+)/
-    const match = url.match(regExp)
-    return match ? match[1] : ""
-  }
 
   function getDriveDownloadUrl(url: string) {
     const match = url.match(/\/file\/d\/([^/]+)/)
@@ -134,24 +129,16 @@ export function LessonContent({
         <TabsContent value="lesson" className="flex-1 flex flex-col gap-6 overflow-y-auto py-4 mb-4 pr-2 bg-transparent pb-24">
           {/* Video */}
           <div className="w-full aspect-video">
-            {!videoUrl ? (
-              <div className="w-full h-full bg-gradient-to-br from-primary/10 to-accent/10 rounded-lg flex items-center justify-center border border-border">
-                <div className="text-center">
-                  <div className="text-muted-foreground mb-2">Video Player</div>
-                  <div className="text-sm text-muted-foreground">
-                    Video will be integrated here
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <iframe
-                className="w-full h-full rounded-lg border border-border"
-                src={`https://www.embedlite.com/embed/${extractYouTubeId(videoUrl)}`}
-                title="YouTube video player"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
-            )}
+            <YouTubePlayer
+              videoUrl={videoUrl}
+              title={lessonTitle}
+              autoPlay={false}
+              loop={false}
+              muted={true}
+              showPlayPause={true}
+              showMute={true}
+              showSeekControls={false}
+            />
           </div>
 
           {/* Lesson Info */}

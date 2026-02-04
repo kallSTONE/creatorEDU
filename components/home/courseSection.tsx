@@ -26,25 +26,26 @@ export default function CourseSection({ course }: { course: Course }) {
       <img
         src={course.image}
         alt={course.title}
-        className="absolute opacity-50 inset-0 h-full w-full object-cover"
+        className="absolute opacity-15 inset-0 h-full w-full object-cover"
       />
 
       {/* Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/60 to-black/30" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/75 to-black/60" />
 
       {/* Content */}
       <div className="relative z-10 flex min-h-screen flex-col justify-end items-center px-6 pb-8 text-white md:px-16">
 
-        <div className="w-full max-w-5xl mb-8">
-          <CourseHero
-            videoUrl={course.introVideoUrl}
-            poster={course.image}
-            title={course.title}
-            description={course.description}
+        <div className="w-full max-w-3xl my-8 ">
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/60 to-black/30" />
+
+          <img
+            src={course.image}
+            alt={course.title}
+            className="h-full w-full rounded-lg"
           />
         </div>
 
-        <div className='relative flex flex-row w-full items-end'>
+        <div className='relative flex flex-row w-full items-end justify-center'>
 
           {/* Creator info*/}
           <div className="absolute bottom-0 left-4 mt-4 flex items-center gap-3">
@@ -59,7 +60,7 @@ export default function CourseSection({ course }: { course: Course }) {
           </div>
 
           {/* Course info */}
-          <div className='ml-[35%] border border-red-900'>
+          <div className='ml-[20%] mr-[20%] items-center flex flex-col'>
             <span className="mb-2 text-sm font-semibold uppercase tracking-widest text-emerald-400">
               {course.category}
             </span>
@@ -68,7 +69,7 @@ export default function CourseSection({ course }: { course: Course }) {
               {course.title}
             </h1>
 
-            <p className="mt-3 max-w-2xl text-sm text-white/80 md:text-base">
+            <p className="mt-3 max-w-2xl text-sm text-white/80 text-center">
               {course.description}
             </p>
 

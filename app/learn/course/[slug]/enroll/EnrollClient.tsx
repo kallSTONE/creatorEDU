@@ -297,6 +297,10 @@ export default function EnrollClient({ slug }: { slug: string }) {
           poster={course.hero_image || "/assets/images/default.jpg"}
           title={course.title}
           description={course.description}
+          showSeekControls
+          autoPlay={true}
+          loop={true}
+          muted={false}
         />
 
         {/* Course Info */}
