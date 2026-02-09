@@ -78,7 +78,7 @@ export default function Home() {
       <section className="py-12 my-2 w-full bg-gradient-to-r from-background via-blue-900/15 dark:via-blue-900/20 to-transparent overflow-hidden">
 
         <h2 className="text-center text-xl sm:text-2xl font-semibold mb-8">
-          Our instructors are trusted by
+          Our Graduates are employeed at
         </h2>
 
         <div className="relative w-full overflow-hidden">
@@ -92,7 +92,7 @@ export default function Home() {
                 <img
                   src={encodeURI(`/assets/images/companyLogos/${logo.file}`)}
                   alt={`${logo.name} logo`}
-                  className="h-10 w-auto object-contain"
+                  className="h-10 w-auto object-contain opacity-60"
                 />
               </div>
             ))}
@@ -119,6 +119,35 @@ export default function Home() {
           <CourseCarousel />
         </div>
       </section>
+
+
+      {/* About the Instructor */}
+      <section> 
+        <div className="container flex flex-col md:flex-row items-center gap-12 p-8">
+          <div className="w-full md:w-1/2">
+            <h2 className="text-3xl font-montserrat font-bold mb-4">ስለ መምህሩ</h2>
+            <p className="text-muted-foreground mb-6">
+              የኢትዮፕያ ጠበቆች ማህበር ፈቃድ ያገኙ መምህሩ በዲጂታል ክህሎቶች ላይ ከ10 ዓመታት በላይ ልምድ አለው።
+            </p>
+            <p className="text-muted-foreground mb-6">
+              ከዚህ በተጨማሪ ብ ዩቱብና በቲክቶክ ላይ ከ10 ዓመታት በላይ ልምድ አለው።
+            </p>
+            <p className="text-muted-foreground mb-6">
+              የኢትዮፕያ ጠበቆች ማህበር ፈቃድ ያገኙ መምህሩ በዲጂታል ክህሎቶች ላይ ከ10 ዓመታት በላይ ልምድ አለው።
+            </p>
+          </div>
+          <div className="w-full md:w-1/2">
+            <img
+              src="/assets/images/instructors/avatar1.png"
+              alt="Instructor Image"
+              className="rounded-lg shadow-lg object-cover w-full h-80"
+            />
+          </div>
+        </div>
+      </section>
+
+
+
 
 
       {/* Latest Articles Section */}

@@ -82,7 +82,7 @@ export default function AdminLayout({
     return null;
 
   return (
-    <div className="relative h-screen flex bg-background overflow-hidden">
+    <div className="relative min-h-screen flex bg-background">
 
       {/* Sidebar */}
       <aside
@@ -167,21 +167,10 @@ export default function AdminLayout({
       </aside>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col ml-20 transition-all duration-300">
-        {/* Top Bar */}
-        <header className="bg-card border-b border-border px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <span className="text-sm text-muted-foreground">
-              {user?.email}
-            </span>
-            <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-primary-foreground font-bold">
-              {user?.email?.[0].toUpperCase()}
-            </div>
-          </div>
-        </header>
+      <div className="flex-1 flex flex-col ml-20 transition-all duration-300 min-h-screen">
 
         {/* Children content */}
-        <main className="flex-1 overflow-auto bg-background p-6">
+        <main className="flex-1 bg-background p-6">
           {children}
         </main>
       </div>

@@ -66,9 +66,19 @@ export default function CoursesPage() {
   useEffect(() => {
     const cached = localStorage.getItem('courses')
     if (cached) {
-      setCourses(JSON.parse(cached))
-    } else {
-      setCourses(staticCourses.filter((c: any) => c.published !== false && c.status !== 'draft').map(mapCourse))
+      try {
+        setCourses(JSON.parse(cached))
+      } catch {
+        localStorage.removeItem('courses')
+      }
+    }
+
+    if (!cached) {
+      const fallback = staticCourses
+        .filter((c: any) => c.published !== false && c.status !== 'draft')
+        .map(mapCourse)
+      setCourses(fallback)
+      localStorage.setItem('courses', JSON.stringify(fallback))
     }
 
     const fetchCourses = async () => {
@@ -175,7 +185,77 @@ export default function CoursesPage() {
   }, [activeTab, filteredCourses])
 
   if (loading && courses.length === 0)
-    return <p className="text-center mt-10">Loading courses...</p>
+    return (
+      <div className="container p-6">
+        <div className="mb-8 space-y-3">
+          <div className="h-8 w-40 rounded bg-muted animate-pulse" />
+          <div className="h-4 w-64 rounded bg-muted animate-pulse" />
+        </div>
+
+        <div className="flex flex-col lg:flex-row gap-8">
+          {/* Sidebar skeleton */}
+          <div className="w-full lg:w-1/4">
+            <div className="sticky top-24 space-y-6">
+              <div className="h-10 w-full rounded bg-muted animate-pulse" />
+              <div className="space-y-4">
+                <div>
+                  <div className="h-4 w-24 rounded bg-muted animate-pulse mb-3" />
+                  <div className="space-y-2">
+                    {Array.from({ length: 6 }).map((_, i) => (
+                      <div key={`cat-skel-${i}`} className="h-9 w-full rounded bg-muted animate-pulse" />
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <div className="h-4 w-16 rounded bg-muted animate-pulse mb-3" />
+                  <div className="space-y-2">
+                    {Array.from({ length: 4 }).map((_, i) => (
+                      <div key={`lvl-skel-${i}`} className="h-9 w-full rounded bg-muted animate-pulse" />
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <div className="h-4 w-20 rounded bg-muted animate-pulse mb-3" />
+                  <div className="space-y-2">
+                    {Array.from({ length: 3 }).map((_, i) => (
+                      <div key={`dur-skel-${i}`} className="h-9 w-full rounded bg-muted animate-pulse" />
+                    ))}
+                  </div>
+                </div>
+                <div className="h-9 w-full rounded bg-muted animate-pulse" />
+              </div>
+            </div>
+          </div>
+
+          {/* Main content skeleton */}
+          <div className="w-full lg:w-3/4">
+            <div className="flex gap-2 mb-6">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <div key={`tab-skel-${i}`} className="h-9 w-24 rounded bg-muted animate-pulse" />
+              ))}
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <div key={`card-skel-${i}`} className="rounded-lg border bg-card overflow-hidden">
+                  <div className="aspect-video w-full bg-muted animate-pulse" />
+                  <div className="p-4 space-y-3">
+                    <div className="h-5 w-3/4 rounded bg-muted animate-pulse" />
+                    <div className="h-4 w-full rounded bg-muted animate-pulse" />
+                    <div className="h-4 w-5/6 rounded bg-muted animate-pulse" />
+                    <div className="flex gap-3">
+                      <div className="h-4 w-20 rounded bg-muted animate-pulse" />
+                      <div className="h-4 w-16 rounded bg-muted animate-pulse" />
+                      <div className="h-4 w-14 rounded bg-muted animate-pulse" />
+                    </div>
+                    <div className="h-9 w-full rounded bg-muted animate-pulse" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    )
 
   return (
     <div className="container p-6">

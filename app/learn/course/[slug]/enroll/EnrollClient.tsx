@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from "react"
-import { useRouter, useParams } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { supabase } from "@/lib/supabase"
 import { useSupabase } from "@/components/providers/supabase-provider"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
@@ -24,7 +24,6 @@ import {
 } from "@/components/ui/accordion"
 import { Loader2, BookOpen, Clock, AlertTriangle, CheckCircle2, Users, TrendingUp, Signal, Star, Video } from "lucide-react"
 import localCourses from "@/public/data/courses.json"
-import { LessonCarousel } from "@/components/course/LessonCarousel"
 import PaymentModal from './PaymentModal'
 import { CourseHero } from "@/components/course/CourseHero"
 
@@ -98,16 +97,59 @@ export default function EnrollClient({ slug }: { slug: string }) {
   const [showConfirmModal, setShowConfirmModal] = useState(false)
   const [isEnrolled, setIsEnrolled] = useState(false)
 
-  const extractYouTubeId = (url: string) => {
-    const match = url.match(
-      /(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([^&?/]+)/
-    )
-    return match?.[1] || null
-  }
-
   // Fetch course data
   useEffect(() => {
     if (!slug) return
+
+    const cacheKey = "courses"
+    const mapLocalCourse = (c: any): Course => ({
+      id: c.id,
+      title: c.title,
+      slug: c.slug,
+      description: c.description || "",
+      hero_image: c.hero_image || c.image || "/assets/images/default.jpg",
+      category: c.category,
+      level: c.level,
+      estimated_hours: c.estimated_hours || 0,
+      requirements: c.requirements || "Basic",
+      skills: c.skills || "",
+      students: c.students || 0,
+      rating: c.rating || 0,
+      is_paid: Boolean(c.is_paid),
+      lessons: c.lessons || [],
+      media: c.course_media || c.media || [],
+    })
+
+    const hydrateFromCache = () => {
+      const cached = localStorage.getItem(cacheKey)
+      if (!cached) return false
+      try {
+        const cachedCourses = JSON.parse(cached)
+        const match = cachedCourses?.find((c: any) => c.slug === slug)
+        if (match) {
+          setCourse(mapLocalCourse(match))
+          return true
+        }
+      } catch {
+        localStorage.removeItem(cacheKey)
+      }
+      return false
+    }
+
+    const hydrateFromLocal = () => {
+      const match = (localCourses as any[]).find((c: any) => c.slug === slug)
+      if (match) {
+        const mapped = mapLocalCourse(match)
+        setCourse(mapped)
+        return true
+      }
+      return false
+    }
+
+    const didHydrate = hydrateFromCache()
+    if (!didHydrate) {
+      hydrateFromLocal()
+    }
 
     // Fetch from Supabase
     const fetchCourse = async () => {
@@ -120,7 +162,7 @@ export default function EnrollClient({ slug }: { slug: string }) {
 
 
       if (!error && data) {
-        setCourse({
+        const mapped = {
           id: data.id,
           title: data.title,
           slug: data.slug,
@@ -143,7 +185,20 @@ export default function EnrollClient({ slug }: { slug: string }) {
             step_order: lesson.step_order,
           })),
           media: data.course_media || [],
-        })
+        }
+        setCourse(mapped)
+
+        try {
+          const cached = localStorage.getItem(cacheKey)
+          const cachedCourses = cached ? JSON.parse(cached) : []
+          const next = Array.isArray(cachedCourses)
+            ? cachedCourses.filter((c: any) => c.slug !== slug)
+            : []
+          next.push(mapped)
+          localStorage.setItem(cacheKey, JSON.stringify(next))
+        } catch {
+          localStorage.removeItem(cacheKey)
+        }
       }
       setLoading(false)
     }
@@ -276,8 +331,62 @@ export default function EnrollClient({ slug }: { slug: string }) {
 
   if (!course)
     return (
-      <div className="flex justify-center items-center min-h-[50vh] text-muted-foreground">
-        <Loader2 className="h-6 w-6 animate-spin mr-2" /> Loading course info...
+      <div className="container mx-auto pt-0 pb-8 flex flex-col md:flex-row gap-12">
+        {/* Left Column Skeleton */}
+        <div className="flex-1 space-y-8 px-4 pb-4 pt-0 md:px-8">
+          <div className="h-8 md:h-10 w-2/3 rounded bg-muted animate-pulse" />
+          <div className="w-full aspect-video rounded-lg bg-muted animate-pulse" />
+
+          <div className="flex flex-wrap gap-4">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <div key={`meta-skel-${i}`} className="h-4 w-24 rounded bg-muted animate-pulse" />
+            ))}
+          </div>
+
+          <div className="space-y-8 border border-border p-6">
+            <div className="space-y-3">
+              <div className="h-6 w-40 rounded bg-muted animate-pulse" />
+              <div className="h-4 w-full rounded bg-muted animate-pulse" />
+              <div className="h-4 w-5/6 rounded bg-muted animate-pulse" />
+            </div>
+            <div className="space-y-3">
+              <div className="h-6 w-56 rounded bg-muted animate-pulse" />
+              <div className="h-4 w-2/3 rounded bg-muted animate-pulse" />
+            </div>
+            <div className="space-y-3">
+              <div className="h-6 w-32 rounded bg-muted animate-pulse" />
+              <div className="space-y-2">
+                {Array.from({ length: 4 }).map((_, i) => (
+                  <div key={`lesson-skel-${i}`} className="h-10 w-full rounded bg-muted animate-pulse" />
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Column Skeleton */}
+        <div className="md:w-[30%] sticky top-24 self-start space-y-4">
+          <Card className="p-4 border border-border">
+            <div className="space-y-4 my-6">
+              <div className="space-y-2">
+                <div className="h-5 w-32 rounded bg-muted animate-pulse" />
+                <div className="h-4 w-full rounded bg-muted animate-pulse" />
+                <div className="h-4 w-5/6 rounded bg-muted animate-pulse" />
+              </div>
+              <div className="space-y-2">
+                <div className="h-5 w-40 rounded bg-muted animate-pulse" />
+                <div className="h-4 w-2/3 rounded bg-muted animate-pulse" />
+              </div>
+              <div className="space-y-2">
+                <div className="h-5 w-36 rounded bg-muted animate-pulse" />
+                {Array.from({ length: 3 }).map((_, i) => (
+                  <div key={`skill-skel-${i}`} className="h-4 w-3/4 rounded bg-muted animate-pulse" />
+                ))}
+              </div>
+            </div>
+            <div className="h-12 w-full rounded bg-muted animate-pulse" />
+          </Card>
+        </div>
       </div>
     )
 
