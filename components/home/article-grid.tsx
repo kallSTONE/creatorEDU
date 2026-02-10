@@ -7,7 +7,7 @@ import articles from '@/public/data/articles'
 
 export default function ArticleGrid() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
       {articles.slice(0, 4).map((article) => (
         <ArticleCard key={article.id} article={article} />
       ))}

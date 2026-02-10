@@ -34,7 +34,7 @@ export default function HeroVideo() {
       videoId: 'mSs5scC7hsI',
       playerVars: {
         autoplay: 1,
-        mute: 1,
+        mute: 0,
         loop: 1,
         playlist: 'mSs5scC7hsI',
         controls: 0,

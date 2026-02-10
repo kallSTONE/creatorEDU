@@ -120,9 +120,82 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Benefits of Learning with warka */}
+      <section className="py-16 bg-gradient-to-r from-background via-blue-900/15 dark:via-blue-900/20 to-transparent w-full px-8">
+        <div className="container ">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-montserrat font-bold">የ ዋርካ ጥቅሞች</h2>
+            <p className="text-muted-foreground mt-2 max-w-xl mx-auto">
+              የ ዋርካ ስልጠናዎችን ለምን መምረጥ እንደሚገባው ያግኙ።
+            </p>
+          </div>
+
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="group rounded-2xl border bg-background/80 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+              <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-blue-600/10 text-blue-700">
+                <span className="text-lg">🎬</span>
+              </div>
+              <h3 className="text-lg font-semibold">ከመጀመሪያ ፍሬም እስከ ፍጹም ቪዲዮ</h3>
+              <p className="mt-2 text-sm text-muted-foreground">
+                የቪዲዮ ኤዲቲንግ መሰረቶች፣ ድምፅ ማሻሻል እና ቀለም ማቀናበርን በእጅ ትማራላችሁ።
+              </p>
+            </div>
+
+            <div className="group rounded-2xl border bg-background/80 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+              <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-emerald-600/10 text-emerald-700">
+                <span className="text-lg"> 📱 </span>
+              </div>
+              <h3 className="text-lg font-semibold">ለኢትዮጵያ ገበያ ተስማሚ ይዘት</h3>
+              <p className="mt-2 text-sm text-muted-foreground">
+                በባህላችን እና በአካባቢ ትርጉም የሚገባ ቪዲዮ እና ቀለል ያለ ታሪክ እንዴት እንደሚሰራ ይማራሉ።
+              </p>
+            </div>
+
+            <div className="group rounded-2xl border bg-background/80 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+              <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-amber-600/10 text-amber-700">
+                <span className="text-lg">⚡</span>
+              </div>
+              <h3 className="text-lg font-semibold">ፈጣን የስራ ፕሮሴስ</h3>
+              <p className="mt-2 text-sm text-muted-foreground">
+                በቀላሉ የሚቀጥለው የፕሮጀክት ፍሰት፣ ፋይል አደራጅት እና ቴምፕሌት ስራ እንዲቀንስ ትማራላችሁ።
+              </p>
+            </div>
+
+            <div className="group rounded-2xl border bg-background/80 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+              <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-purple-600/10 text-purple-700">
+                <span className="text-lg">🧠</span>
+              </div>
+              <h3 className="text-lg font-semibold">የታሪክ መስራት ክህሎት</h3>
+              <p className="mt-2 text-sm text-muted-foreground">
+                ተመልካቾችን የሚያገናኝ የቪዲዮ ትምክህት፣ ንብረት መዋቅር እና ቅንብር ትኩረት ታገኛላችሁ።
+              </p>
+            </div>
+
+            <div className="group rounded-2xl border bg-background/80 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+              <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-rose-600/10 text-rose-700">
+                <span className="text-lg">💼</span>
+              </div>
+              <h3 className="text-lg font-semibold">ፖርትፎሊዮ እና የክለይንት እርምጃ</h3>
+              <p className="mt-2 text-sm text-muted-foreground">
+                ስራ ለማሳየት የሚረዱ ንጥረ ስራዎች ይገነባሉ፣ የሚገባ ዋጋ እና የክለይንት ግንኙነት ይማራሉ።
+              </p>
+            </div>
+
+            <div className="group rounded-2xl border bg-background/80 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+              <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-slate-600/10 text-slate-700">
+                <span className="text-lg">🤝</span>
+              </div>
+              <h3 className="text-lg font-semibold">ማህበረሰብ እና ድጋፍ</h3>
+              <p className="mt-2 text-sm text-muted-foreground">
+                ከሀገር ውስጥ እና ውጭ ፈጣሪዎች ጋር የሚያገናኝ ኔትዎርክ፣ ክለሳ እና ቀጣይ መመሪያ ታገኛላችሁ።
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* About the Instructor */}
-      <section> 
+      <section className="py-16 bg-background w-full px-8">
         <div className="container flex flex-col md:flex-row items-center gap-12 p-8">
           <div className="w-full md:w-1/2">
             <h2 className="text-3xl font-montserrat font-bold mb-4">ስለ መምህሩ</h2>
