@@ -1,6 +1,6 @@
 "use client"
 
-import Link from "next/link"
+import TransitionLink from "@/components/transition-link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { LayoutDashboard, BookOpen, Users, FileText, BarChart3, ChevronLeft } from "lucide-react"
@@ -50,7 +50,7 @@ export function Sidebar({ open, onToggle }: SidebarProps) {
           const Icon = item.icon
           const isActive = pathname === item.href
           return (
-            <Link
+            <TransitionLink
               key={item.href}
               href={item.href}
               className={cn(
@@ -62,7 +62,7 @@ export function Sidebar({ open, onToggle }: SidebarProps) {
             >
               <Icon className="w-5 h-5 flex-shrink-0" />
               {open && <span className="text-sm font-medium">{item.label}</span>}
-            </Link>
+            </TransitionLink>
           )
         })}
       </nav>

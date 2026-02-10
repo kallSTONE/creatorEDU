@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import Link from 'next/link'
+import TransitionLink from '@/components/transition-link'
 import { useRouter } from 'next/navigation'
 import {
   Card,
@@ -187,10 +187,10 @@ export default function DashboardPage() {
 
         <div className="flex gap-3">
           <Button variant="outline" asChild>
-            <Link href="/learn">ኮርሶችን ተመልከት</Link>
+            <TransitionLink href="/learn">ኮርሶችን ተመልከት</TransitionLink>
           </Button>
           <Button asChild>
-            <Link href="/dashboard/settings">መገለጫ አርትዕ</Link>
+            <TransitionLink href="/dashboard/settings">መገለጫ አርትዕ</TransitionLink>
           </Button>
         </div>
       </div>
@@ -206,10 +206,10 @@ export default function DashboardPage() {
                   በሂደት ላይ ያሉ ኮርሶች
                 </CardTitle>
                 <Button variant="ghost" size="sm" asChild>
-                  <Link href="/dashboard/my-courses">
+                  <TransitionLink href="/dashboard">
                     ሁሉንም አይ
                     <ArrowRight className="ml-1 h-4 w-4" />
-                  </Link>
+                  </TransitionLink>
                 </Button>
               </div>
             </CardHeader>
@@ -225,7 +225,7 @@ export default function DashboardPage() {
                     እስካሁን ከኮርሶች ጋር አልተመዘገቡም
                   </p>
                   <Button asChild>
-                    <Link href="/learn">ኮርሶችን ተመልከት</Link>
+                    <TransitionLink href="/learn">ኮርሶችን ተመልከት</TransitionLink>
                   </Button>
                 </div>
               ) : (
@@ -268,11 +268,11 @@ export default function DashboardPage() {
 
                           {item.firstLessonId && (
                             <Button size="sm" asChild>
-                              <Link
+                              <TransitionLink
                                 href={`/learn/course/${item.course.slug}/lesson/${item.firstLessonId}`}
                               >
                                 ቀጥል
-                              </Link>
+                              </TransitionLink>
                             </Button>
                           )}
                         </div>
@@ -293,10 +293,10 @@ export default function DashboardPage() {
                   የውይይት ዝማኔዎች
                 </CardTitle>
                 <Button variant="ghost" size="sm" asChild>
-                  <Link href="/dashboard/discussions">
+                  <TransitionLink href="/dashboard/discussions">
                     ሁሉንም አይ
                     <ArrowRight className="ml-1 h-4 w-4" />
-                  </Link>
+                  </TransitionLink>
                 </Button>
               </div>
             </CardHeader>
@@ -322,7 +322,7 @@ export default function DashboardPage() {
                         {discussion.replies} ምላሾች
                       </div>
                       <Button size="sm" variant="outline" asChild>
-                        <Link href={`/community/discussion/${discussion.id}`}>ክርክሩን አይ</Link>
+                        <TransitionLink href={`/community/discussion/${discussion.id}`}>ክርክሩን አይ</TransitionLink>
                       </Button>
                     </div>
                   </div>
@@ -424,22 +424,22 @@ export default function DashboardPage() {
             <CardContent>
               <div className="space-y-3">
                 <Button variant="outline" className="w-full justify-start" asChild>
-                  <Link href="/community">
+                  <TransitionLink href="/community">
                     <MessageCircle className="mr-2 h-4 w-4" />
                     ውይይቶችን ይቀላቀሉ
-                  </Link>
+                  </TransitionLink>
                 </Button>
                 <Button variant="outline" className="w-full justify-start" asChild>
-                  <Link href="/mentors">
+                  <TransitionLink href="/mentors">
                     <Users className="mr-2 h-4 w-4" />
                     መንቶር ፈልጉ
-                  </Link>
+                  </TransitionLink>
                 </Button>
                 <Button variant="outline" className="w-full justify-start" asChild>
-                  <Link href="/community/events">
+                  <TransitionLink href="/community/events">
                     <Calendar className="mr-2 h-4 w-4" />
                     የሚመጡ ክስተቶች
-                  </Link>
+                  </TransitionLink>
                 </Button>
               </div>
             </CardContent>

@@ -1,10 +1,12 @@
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
-import { GraduationCap, Facebook, Twitter, Instagram, Youtube, Mail, Phone, MapPin } from 'lucide-react'
+import { Facebook, Twitter, Instagram, Youtube, Mail, Phone, MapPin } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import Image from 'next/image'
 import Lg from '@/public/assets/images/warkalogo.png'
+
+import TransitionLink from '@/components/transition-link'
 
 const footerLinks = [
   {
@@ -74,9 +76,9 @@ export default function Footer() {
                   <ul className="mt-4 space-y-3">
                     {group.links.map((link) => (
                       <li key={link.name}>
-                        <Link href={link.href} className="text-sm text-muted-foreground hover:text-foreground">
+                        <TransitionLink href={link.href} className="text-sm text-muted-foreground hover:text-foreground">
                           {link.name}
-                        </Link>
+                        </TransitionLink>
                       </li>
                     ))}
                   </ul>
@@ -91,9 +93,9 @@ export default function Footer() {
                     <ul className="mt-4 space-y-3">
                       {group.links.map((link) => (
                         <li key={link.name}>
-                          <Link href={link.href} className="text-sm text-muted-foreground hover:text-foreground">
+                          <TransitionLink href={link.href} className="text-sm text-muted-foreground hover:text-foreground">
                             {link.name}
-                          </Link>
+                          </TransitionLink>
                         </li>
                       ))}
                     </ul>
@@ -104,9 +106,9 @@ export default function Footer() {
                 <h3 className="text-sm font-semibold">Contact</h3>
                 <ul className="mt-4 space-y-3">
                   <li>
-                    <a href="mailto:info@careerguide.et" className="text-sm text-muted-foreground hover:text-foreground flex items-center gap-2">
+                    <a href="mailto:info@warka.et" className="text-sm text-muted-foreground hover:text-foreground flex items-center gap-2">
                       <Mail className="h-4 w-4" />
-                      info@careerguide.et
+                      info@warka.et
                     </a>
                   </li>
                   <li>

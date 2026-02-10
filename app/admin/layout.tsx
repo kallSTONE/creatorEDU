@@ -2,7 +2,7 @@
 
 import type React from "react"
 import { useState, useEffect } from "react"
-import Link from "next/link"
+import TransitionLink from "@/components/transition-link"
 import { Button } from "@/components/ui/button"
 import {
   LogOut,
@@ -105,7 +105,7 @@ export default function AdminLayout({
         {/* Navigation */}
         <nav className="flex-1 p-4 space-y-2">
           {menuItems.map((item) => (
-            <Link key={item.href} href={item.href}>
+            <TransitionLink key={item.href} href={item.href}>
               <Button
                 variant="ghost"
                 className={`
@@ -123,7 +123,7 @@ export default function AdminLayout({
                   {item.label}
                 </span>
               </Button>
-            </Link>
+            </TransitionLink>
           ))}
         </nav>
 

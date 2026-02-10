@@ -1,6 +1,6 @@
 'use client'
 
-import Link from 'next/link'
+import TransitionLink from '@/components/transition-link'
 import { Button } from '@/components/ui/button'
 import { Lock } from 'lucide-react'
 import type { Creator } from '@/data/creators'
@@ -81,7 +81,7 @@ export default function CourseSection({ course }: { course: Course }) {
                   size="lg"
                   className="group relative overflow-hidden bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-lg transition-all duration-200 hover:scale-[1.03] hover:shadow-xl"
                 >
-                  <Link
+                  <TransitionLink
                     href={`/learn/course/${course.slug}`}
                     className="flex flex-col items-center"
                   >
@@ -91,7 +91,7 @@ export default function CourseSection({ course }: { course: Course }) {
                     <span className="text-xs text-white/80">
                       Instant access • Cancel anytime
                     </span>
-                  </Link>
+                  </TransitionLink>
                 </Button>
               ) : (
                 <div className="inline-flex items-center gap-2 rounded-md bg-black/50 px-5 py-3 text-sm font-medium">

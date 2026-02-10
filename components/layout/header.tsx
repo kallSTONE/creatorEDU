@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import Link from 'next/link'
+import TransitionLink from '@/components/transition-link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
@@ -23,6 +23,7 @@ const navigation = [
   { name: 'መዝገብ', href: '/resources' },
   { name: 'Pr', href: '/presentation' },
   { name: 'ስለ እኛ', href: '/about' },
+  { name: 'የኔ አካውንት', href: '/dashboard'}
 ]
 
 function ThemeToggleButton() {
@@ -60,21 +61,22 @@ export default function Header() {
   const pathname = usePathname()
   const { user } = useSupabase()
   const lawyerExcludedNames = ['ማህበር', 'መገበያያ', 'ስለ እኛ', 'Pr'];
+  const adminExcludedNames = ['የኔ አካውንት'];
 
   const filteredNavigation = navigation.filter((item) => {
 
-  // No user or admin → show everything
-  if (!user || user?.user_metadata?.role === 'admin') {
+    // No user or admin → show everything
+    if (!user || user?.user_metadata?.role === 'admin') {
+      return !adminExcludedNames.includes(item.name);
+    }
+
+    // Lawyer → exclude specific links
+    if (user?.user_metadata?.role === 'lawyer') {
+      return !lawyerExcludedNames.includes(item.name);
+    }
+
     return true;
-  }
-
-  // Lawyer → exclude specific links
-  if (user?.user_metadata?.role === 'lawyer') {
-    return !lawyerExcludedNames.includes(item.name);
-  }
-
-  return true;
-});
+  });
 
 
   useEffect(() => {
@@ -99,9 +101,9 @@ export default function Header() {
     )}>
       <nav className="mx-auto flex max-w-7xl items-center justify-between p-4 lg:px-8" aria-label="Global">
         <div className="flex lg:flex-1">
-          <Link href="/" className="-m-1.5 p-1.5 flex items-center gap-2">
+          <TransitionLink href="/" className="-m-1.5 p-1.5 flex items-center gap-2">
             <Image src={Lg} alt="Tesfa Logo" className="h-[40px] w-auto " />
-          </Link>
+          </TransitionLink>
         </div>
 
         <div className="flex lg:hidden">
@@ -117,7 +119,7 @@ export default function Header() {
 
         <div className="hidden lg:flex lg:gap-x-8">
           {filteredNavigation.map((item) => (
-            <Link
+            <TransitionLink
               key={item.name}
               href={item.href}
               className={cn(
@@ -128,7 +130,7 @@ export default function Header() {
               )}
             >
               {item.name}
-            </Link>
+            </TransitionLink>
           ))}
         </div>
 
@@ -144,10 +146,10 @@ export default function Header() {
           ) : (
             <div className="flex gap-2">
               <Button variant="ghost" asChild>
-                <Link href="/login">Log in</Link>
+                <TransitionLink href="/login">Log in</TransitionLink>
               </Button>
               <Button asChild>
-                <Link href="/register">Sign up</Link>
+                <TransitionLink href="/register">Sign up</TransitionLink>
               </Button>
             </div>
           )}
@@ -160,9 +162,9 @@ export default function Header() {
           <div className="fixed inset-0 bg-black/20 backdrop-blur-sm" onClick={() => setMobileMenuOpen(false)} />
           <div className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-background px-6 py-6 sm:max-w-sm">
             <div className="flex items-center justify-between mb-6">
-              <Link href="/" className="-m-1.5 p-1.5 flex items-center gap-2">
+              <TransitionLink href="/" className="-m-1.5 p-1.5 flex items-center gap-2">
                 <Image src={Lg} alt="Tesfa Logo" className="h-[25px] w-auto " />
-              </Link>              
+              </TransitionLink>
               <button
                 type="button"
                 className="-m-2.5 rounded-md p-2.5 text-muted-foreground"
@@ -176,7 +178,7 @@ export default function Header() {
               <div className="-my-6 divide-y divide-border">
                 <div className="flex flex-col lg:gap-x-8">
                   {filteredNavigation.map((item) => (
-                    <Link
+                    <TransitionLink
                       key={item.name}
                       href={item.href}
                       className={cn(
@@ -187,7 +189,7 @@ export default function Header() {
                       )}
                     >
                       {item.name}
-                    </Link>
+                    </TransitionLink>
                   ))}
                 </div>
 
@@ -204,10 +206,10 @@ export default function Header() {
                   ) : (
                     <div className="flex flex-col gap-2 w-full">
                       <Button variant="outline" asChild className="w-full">
-                        <Link href="/login" onClick={() => setMobileMenuOpen(false)}>Log in</Link>
+                        <TransitionLink href="/login" onClick={() => setMobileMenuOpen(false)}>Log in</TransitionLink>
                       </Button>
                       <Button asChild className="w-full">
-                        <Link href="/register" onClick={() => setMobileMenuOpen(false)}>Sign up</Link>
+                        <TransitionLink href="/register" onClick={() => setMobileMenuOpen(false)}>Sign up</TransitionLink>
                       </Button>
                     </div>
                   )}

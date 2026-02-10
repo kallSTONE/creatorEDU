@@ -1,14 +1,14 @@
 'use client'
 
 import { useState } from 'react'
-import Link from 'next/link'
+import TransitionLink from '@/components/transition-link'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { useSupabase } from '@/components/providers/supabase-provider'
-import { GraduationCap, Mail, Lock, User, Loader2 } from 'lucide-react'
+import { Mail, Lock, User, Loader2 } from 'lucide-react'
 import Image from 'next/image'
 import Lg from '@/public/assets/images/warkalogo.png'
 
@@ -48,13 +48,13 @@ export default function RegisterPage() {
       <Card>
         <CardHeader className="space-y-4">
           <div className="flex justify-center">
-            <Link href="/" className="-m-1.5 p-1.5 flex items-center gap-2">
+            <TransitionLink href="/" className="-m-1.5 p-1.5 flex items-center gap-2">
               <Image src={Lg} alt="Tesfa Logo" className="h-[50px] w-auto" />
-            </Link>             
+            </TransitionLink>             
           </div>
           <CardTitle className="text-2xl text-center">Create an account</CardTitle>
           <CardDescription className="text-center">
-            Enter your information to get started with CareerGuide
+            Enter your information to get started with Warka
           </CardDescription>
         </CardHeader>
         
@@ -158,13 +158,13 @@ export default function RegisterPage() {
             
             <p className="text-xs text-muted-foreground text-center">
               By creating an account, you agree to our{' '}
-              <Link href="/terms" className="text-primary hover:underline">
+              <TransitionLink href="/terms" className="text-primary hover:underline">
                 Terms of Service
-              </Link>{' '}
+              </TransitionLink>{' '}
               and{' '}
-              <Link href="/privacy" className="text-primary hover:underline">
+              <TransitionLink href="/privacy" className="text-primary hover:underline">
                 Privacy Policy
-              </Link>
+              </TransitionLink>
             </p>
           </CardContent>
         </form>
@@ -172,9 +172,9 @@ export default function RegisterPage() {
         <CardFooter className="flex justify-center">
           <div className="text-sm text-muted-foreground">
             Already have an account?{' '}
-            <Link href="/login" className="text-primary hover:underline">
+            <TransitionLink href="/login" className="text-primary hover:underline">
               Sign in
-            </Link>
+            </TransitionLink>
           </div>
         </CardFooter>
       </Card>

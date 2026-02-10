@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { supabase } from "@/lib/supabase"
 import { useSupabase } from "@/components/providers/supabase-provider"
+import { useRouteLoading } from "@/components/route-loading-provider"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import {
@@ -76,6 +77,7 @@ interface Review {
 
 export default function EnrollClient({ slug }: { slug: string }) {
   const router = useRouter()
+  const { startLoading } = useRouteLoading()
   const { user, loading: userLoading } = useSupabase()
   const [course, setCourse] = useState<Course | null>(null)
   const [status, setStatus] = useState<"idle" | "checking" | "enrolled" | "already" | "error">("idle")
@@ -228,6 +230,7 @@ export default function EnrollClient({ slug }: { slug: string }) {
   const handleEnroll = async () => {
     if (!user) {
       localStorage.setItem("redirectAfterLogin", `/learn/course/${slug}/`)
+      startLoading()
       router.push("/login")
       return
     }
@@ -279,6 +282,7 @@ export default function EnrollClient({ slug }: { slug: string }) {
       setIsEnrolled(true)
 
       setTimeout(() => {
+        startLoading()
         router.push(`/learn/course/${slug}/lesson/1`)
       }, 2000)
     } catch (error: any) {
@@ -294,6 +298,7 @@ export default function EnrollClient({ slug }: { slug: string }) {
         "redirectAfterLogin",
         `/learn/course/${slug}/`
       )
+      startLoading()
       router.push("/login")
       return
     }

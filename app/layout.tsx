@@ -6,6 +6,8 @@ import { Toaster } from '@/components/ui/toaster';
 import AuthHeader from '@/components/layout/auth-header';
 import Footer from '@/components/layout/footer';
 import { SupabaseProvider } from '@/components/providers/supabase-provider';
+import { RouteLoadingProvider } from '@/components/route-loading-provider';
+import RouteLoadingOverlay from '@/components/route-loading-overlay';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -40,12 +42,15 @@ export default function RootLayout({
           enableSystem
         >
           <SupabaseProvider>
-            <AuthHeader />
-            <main className="flex-grow w-full">
-              {children}
-            </main>
-            <Footer />
-            <Toaster />
+            <RouteLoadingProvider>
+              <RouteLoadingOverlay />
+              <AuthHeader />
+              <main className="flex-grow w-full">
+                {children}
+              </main>
+              <Footer />
+              <Toaster />
+            </RouteLoadingProvider>
           </SupabaseProvider>
         </ThemeProvider>
       </body>

@@ -1,38 +1,44 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import Link from 'next/link'
+import TransitionLink from '@/components/transition-link'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { useSupabase } from '@/components/providers/supabase-provider'
+import { useRouteLoading } from '@/components/route-loading-provider'
 import { GraduationCap, Mail, Lock, Loader2 } from 'lucide-react'
 import Image from 'next/image'
 import Lg from '@/public/assets/images/warkalogo.png'
 
 export default function LoginPage() {
   const router = useRouter()
+  const { startLoading } = useRouteLoading()
   const { signIn, user, loading } = useSupabase()
   const [isLoading, setIsLoading] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
 
- // 🧭 Redirect user when authenticated
+  // 🧭 Redirect user when authenticated
   useEffect(() => {
     if (!loading && user) {
       const redirectPath = localStorage.getItem('redirectAfterLogin')
 
       if (redirectPath) {
         localStorage.removeItem('redirectAfterLogin')
+        startLoading()
         router.push(redirectPath)
       } else if (user?.user_metadata?.role === 'admin') {
+        startLoading()
         router.push('/admin/dashboard')
-      } else if(user?.user_metadata?.role === 'lawyer'){
+      } else if (user?.user_metadata?.role === 'lawyer') {
+        startLoading()
         router.push('/dashboard')
-      } else if(user?.user_metadata?.role === 'reviewer'){
+      } else if (user?.user_metadata?.role === 'reviewer') {
+        startLoading()
         router.push('/reviewer')
       }
     }
@@ -59,9 +65,9 @@ export default function LoginPage() {
       <Card>
         <CardHeader className="space-y-4">
           <div className="flex justify-center">
-            <Link href="/" className="-m-1.5 p-1.5 flex items-center gap-2">
+            <TransitionLink href="/" className="-m-1.5 p-1.5 flex items-center gap-2">
               <Image src={Lg} alt="Tesfa Logo" className="h-[50px] w-auto" />
-            </Link>            
+            </TransitionLink>
           </div>
           <CardTitle className="text-xl text-center pt-4">Welcome back</CardTitle>
           <CardDescription className="text-center">
@@ -96,9 +102,9 @@ export default function LoginPage() {
             <div className="space-y-2">
               <div className="flex justify-between">
                 <Label htmlFor="password">Password</Label>
-                <Link href="/forgot-password" className="text-sm text-primary hover:underline">
+                <TransitionLink href="/forgot-password" className="text-sm text-primary hover:underline">
                   Forgot password?
-                </Link>
+                </TransitionLink>
               </div>
               <div className="relative">
                 <Lock className="absolute left-3 top-2.5 h-5 w-5 text-muted-foreground" />
@@ -129,9 +135,9 @@ export default function LoginPage() {
         <CardFooter className="flex justify-center">
           <div className="text-sm text-muted-foreground">
             Don’t have an account?{' '}
-            <Link href="/register" className="text-primary hover:underline">
+            <TransitionLink href="/register" className="text-primary hover:underline">
               Sign up
-            </Link>
+            </TransitionLink>
           </div>
         </CardFooter>
       </Card>

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { useRouteLoading } from '@/components/route-loading-provider'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -22,6 +23,7 @@ export default function CourseDetailPage() {
     const [reviewNotes, setReviewNotes] = useState<Note[]>([])
     const { toast } = useToast()
     const router = useRouter()
+    const { startLoading } = useRouteLoading()
 
     useEffect(() => {
         if (!id) return
@@ -196,10 +198,31 @@ export default function CourseDetailPage() {
                     )}
 
                     <div className="mt-6 flex gap-2">
-                        <Button variant="ghost" onClick={() => router.back()}>Back</Button>
-                        <Button onClick={() => router.push(`/admin/courses/${id}/edit`)}>Edit Course</Button>
-                        <Button onClick={() => router.push(`/learn/course/${course.slug}/lesson/1`)}>View More</Button>
-
+                        <Button
+                            variant="ghost"
+                            onClick={() => {
+                                startLoading()
+                                router.back()
+                            }}
+                        >
+                            Back
+                        </Button>
+                        <Button
+                            onClick={() => {
+                                startLoading()
+                                router.push(`/admin/courses/${id}/edit`)
+                            }}
+                        >
+                            Edit Course
+                        </Button>
+                        <Button
+                            onClick={() => {
+                                startLoading()
+                                router.push(`/learn/course/${course.slug}/lesson/1`)
+                            }}
+                        >
+                            View More
+                        </Button>
                     </div>
                 </CardContent>
             </Card>

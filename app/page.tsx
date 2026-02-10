@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import TransitionLink from '@/components/transition-link'
 import { Button } from '@/components/ui/button'
 import CourseCarousel from '@/components/home/course-carousel'
 import ArticleGrid from '@/components/home/article-grid'
@@ -58,9 +58,9 @@ export default function Home() {
                 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:ring-offset-2
               "
             >
-              <Link href="/learn" className="relative z-10 px-8 py-4">
+              <TransitionLink href="/learn" className="relative z-10 px-8 py-4">
                 Explore programs →
-              </Link>
+              </TransitionLink>
             </Button>
           </div>
 
@@ -112,7 +112,7 @@ export default function Home() {
               </p>
             </div>
             <Button variant="ghost" className="mt-4 md:mt-0" asChild>
-              <Link href="/learn">ሁሉንም ስልጠናዎች ይመልከቱ</Link>
+              <TransitionLink href="/learn">ሁሉንም ስልጠናዎች ይመልከቱ</TransitionLink>
             </Button>
           </div>
 
@@ -161,7 +161,7 @@ export default function Home() {
               </p>
             </div>
             <Button variant="ghost" className="mt-4 md:mt-0" asChild>
-              <Link href="/blog">ሁሉንም ጽሑፎች ይመልከቱ</Link>
+              <TransitionLink href="/blog">ሁሉንም ጽሑፎች ይመልከቱ</TransitionLink>
             </Button>
           </div>
 

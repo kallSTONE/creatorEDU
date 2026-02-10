@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
-import Link from 'next/link'
+import TransitionLink from '@/components/transition-link'
 import { Input } from "@/components/ui/input"
 import { Search, Plus, Edit2, Trash2, Eye } from "lucide-react"
 import { supabase } from '@/lib/supabase'
@@ -129,12 +129,12 @@ export default function CoursesPage() {
           <h1 className="text-3xl font-bold text-foreground">Courses</h1>
           <p className="text-muted-foreground mt-2">Manage all your courses and content</p>
         </div>
-        <Link href="/admin/courses/new" className="no-underline hidden md:block">
+        <TransitionLink href="/admin/courses/new" className="no-underline hidden md:block">
           <Button className="gap-2">
             <Plus size={20} />
             New Course
           </Button>
-        </Link>
+        </TransitionLink>
       </div>
 
       {/* Filters and Search */}
@@ -186,17 +186,17 @@ export default function CoursesPage() {
                     <td className="py-4 px-4 text-muted-foreground">{course.created_at ? new Date(course.created_at).toLocaleDateString() : '—'}</td>
                     <td className="py-4 px-4">
                       <div className="flex gap-2">
-                        <Link href={`/admin/courses/${course.id}`}>
+                        <TransitionLink href={`/admin/courses/${course.id}`}>
                           <Button variant="ghost" size="sm" className="gap-1">
                             <Eye size={16} />
                           </Button>
-                        </Link>
+                        </TransitionLink>
 
-                        <Link href={`/admin/courses/${course.id}/edit`}>
+                        <TransitionLink href={`/admin/courses/${course.id}/edit`}>
                           <Button variant="ghost" size="sm" className="gap-1">
                             <Edit2 size={16} />
                           </Button>
-                        </Link>
+                        </TransitionLink>
 
                         <Button
                           variant="ghost"

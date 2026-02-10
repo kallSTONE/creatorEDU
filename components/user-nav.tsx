@@ -13,7 +13,8 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { useSupabase } from "@/components/providers/supabase-provider"
 import { User, Settings, LogOut, BookOpen, MessageSquare, ShoppingBag } from "lucide-react"
-import Link from "next/link"
+import TransitionLink from "@/components/transition-link"
+
 
 export function UserNav() {
   const { user, signOut } = useSupabase()
@@ -55,36 +56,30 @@ export function UserNav() {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem asChild>
-            <Link href={dashboardHref} className="flex w-full cursor-pointer">
+            <TransitionLink href={dashboardHref} className="flex w-full cursor-pointer">
               <User className="mr-2 h-4 w-4" />
               <span>Dashboard</span>
-            </Link>
+            </TransitionLink>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <Link href="/dashboard/my-courses" className="flex w-full cursor-pointer">
+            <TransitionLink href="/dashboard/" className="flex w-full cursor-pointer">
               <BookOpen className="mr-2 h-4 w-4" />
               <span>My Courses</span>
-            </Link>
+            </TransitionLink>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <Link href="/dashboard/discussions" className="flex w-full cursor-pointer">
-              <MessageSquare className="mr-2 h-4 w-4" />
-              <span>My Discussions</span>
-            </Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-            <Link href="/dashboard/orders" className="flex w-full cursor-pointer">
+            <TransitionLink href="/dashboard/orders" className="flex w-full cursor-pointer">
               <ShoppingBag className="mr-2 h-4 w-4" />
               <span>My Orders</span>
-            </Link>
+            </TransitionLink>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          <Link href="/dashboard/settings" className="flex w-full cursor-pointer">
+          <TransitionLink href="/dashboard/" className="flex w-full cursor-pointer">
             <Settings className="mr-2 h-4 w-4" />
             <span>Settings</span>
-          </Link>
+          </TransitionLink>
         </DropdownMenuItem>
         <DropdownMenuItem
           onClick={async () => {

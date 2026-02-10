@@ -1,6 +1,6 @@
 'use client'
 
-import Link from 'next/link'
+import TransitionLink from '@/components/transition-link'
 import { useEffect, useState, useMemo } from 'react'
 import { supabase } from '@/lib/supabase'
 import { Button } from '@/components/ui/button'
@@ -470,7 +470,7 @@ function CourseCard({ course }: CourseCardProps) {
 
       <CardFooter>
         <Button asChild className="w-full">
-          <Link href={`/learn/course/${course.slug}`}>View Course</Link>
+          <TransitionLink href={`/learn/course/${course.slug}`}>View Course</TransitionLink>
         </Button>
       </CardFooter>
     </Card>
