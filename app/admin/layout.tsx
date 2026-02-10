@@ -31,7 +31,7 @@ export default function AdminLayout({
     { label: "Courses", href: "/admin/courses", icon: BookOpen },
     { label: "Students", href: "/admin/students", icon: Users },
     { label: "Articles", href: "/admin/articles", icon: FileText },
-    { label: "Analytics", href: "/admin/analytics", icon: BarChart3 },
+    { label: "Revenue", href: "/admin/analytics", icon: BarChart3 },
     { label: "Quizzes", href: "/admin/quizzes", icon: ListChecks },
   ]
 
