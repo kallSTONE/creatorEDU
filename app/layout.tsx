@@ -1,5 +1,6 @@
 import './globals.css';
 import type { Metadata } from 'next';
+import { Suspense } from 'react';
 import { Inter, Montserrat } from 'next/font/google';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Toaster } from '@/components/ui/toaster';
@@ -42,15 +43,17 @@ export default function RootLayout({
           enableSystem
         >
           <SupabaseProvider>
-            <RouteLoadingProvider>
-              <RouteLoadingOverlay />
-              <AuthHeader />
-              <main className="flex-grow w-full">
-                {children}
-              </main>
-              <Footer />
-              <Toaster />
-            </RouteLoadingProvider>
+            <Suspense fallback={null}>
+              <RouteLoadingProvider>
+                <RouteLoadingOverlay />
+                <AuthHeader />
+                <main className="flex-grow w-full">
+                  {children}
+                </main>
+                <Footer />
+                <Toaster />
+              </RouteLoadingProvider>
+            </Suspense>
           </SupabaseProvider>
         </ThemeProvider>
       </body>
