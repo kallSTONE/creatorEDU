@@ -56,7 +56,7 @@ export default function RegisterPage() {
           <TabsTrigger value="Email" className="data-[state=active]:border-primary data-[state=active]:border-b-2 data-[state=active]:text-primary">
             Sign up with Email
           </TabsTrigger>
-          <TabsTrigger value="Phone" className="data-[state=active]:border-primary data-[state=active]:border-b-2 data-[state=active]:text-primary">
+          <TabsTrigger value="phone" className="data-[state=active]:border-primary data-[state=active]:border-b-2 data-[state=active]:text-primary">
             Sign up with Phone
           </TabsTrigger>
         </TabsList>
@@ -242,7 +242,7 @@ export default function RegisterPage() {
                       id="phone"
                       type="tel"
                       placeholder="0987654321"
-                      value={Phone}
+                      value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                       className="pl-10"
                       required
