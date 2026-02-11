@@ -571,7 +571,10 @@ export default function EnrollClient({ slug }: { slug: string }) {
           <div className="flex flex-col gap-4">
             {isEnrolled ? (
               <Button
-                onClick={() => router.push(`/learn/course/${slug}/lesson/1`)}
+                onClick={() => {
+                  startLoading()
+                  router.push(`/learn/course/${slug}/lesson/1`)
+                }}
                 className="w-full text-lg font-semibold"
               >
                 ወደ ስልጠናው ቀጥል
@@ -606,7 +609,14 @@ export default function EnrollClient({ slug }: { slug: string }) {
               <div className="flex flex-col items-center space-y-1 text-blue-600">
                 <CheckCircle2 className="w-6 h-6" />
                 <p>አስቀድሞ ተመዝግበዋል።</p>
-                <Button onClick={() => router.push(`/learn/course/${slug}/lesson/1`)}>ወደ ስልጠናው ቀጥል</Button>
+                <Button
+                  onClick={() => {
+                    startLoading()
+                    router.push(`/learn/course/${slug}/lesson/1`)
+                  }}
+                >
+                  ወደ ስልጠናው ቀጥል
+                </Button>
               </div>
             )}
             {status === "error" && (
