@@ -224,6 +224,33 @@ html {
     --chart-5: 160 70% 55%;
   }
 
+  .darkred {
+    --background: 350 22% 6%;
+    --foreground: 0 0% 92%;
+    --card: 350 22% 10%;
+    --card-foreground: 0 0% 92%;
+    --popover: 350 22% 11%;
+    --popover-foreground: 0 0% 92%;
+    --primary: 358 85% 62%;
+    --primary-foreground: 350 22% 8%;
+    --secondary: 350 18% 18%;
+    --secondary-foreground: 0 0% 92%;
+    --muted: 350 16% 14%;
+    --muted-foreground: 0 0% 65%;
+    --accent: 12 75% 55%;
+    --accent-foreground: 350 22% 8%;
+    --destructive: 0 75% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 350 18% 16%;
+    --input: 350 18% 16%;
+    --ring: 358 85% 62%;
+    --chart-1: 358 85% 62%;
+    --chart-2: 12 75% 55%;
+    --chart-3: 320 70% 60%;
+    --chart-4: 28 90% 60%;
+    --chart-5: 180 65% 45%;
+  }
+
   .corporate {
     --background: 210 20% 98%;
     --foreground: 218 22% 16%;

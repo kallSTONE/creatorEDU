@@ -14,6 +14,7 @@ import { Textarea } from "@/components/ui/textarea"
 const themeOptions = [
     { value: "light", label: "Light" },
     { value: "dark", label: "Dark" },
+    { value: "darkred", label: "Dark Red" },
     { value: "corporate", label: "Corporate" },
     { value: "sunrise", label: "Sunrise" },
     { value: "ocean", label: "Ocean" },
