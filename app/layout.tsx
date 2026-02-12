@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import { Inter, Montserrat } from 'next/font/google';
 import { ThemeProvider } from '@/components/theme-provider';
+import { getSiteSettings } from '@/lib/site-settings';
 import { Toaster } from '@/components/ui/toaster';
 import AuthHeader from '@/components/layout/auth-header';
 import Footer from '@/components/layout/footer';
@@ -29,17 +30,20 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const settings = await getSiteSettings();
+  const defaultTheme = settings?.default_theme ?? 'dark';
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable} ${montserrat.variable} font-sans min-h-screen flex flex-col`}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
+          defaultTheme={defaultTheme}
           enableSystem
         >
           <SupabaseProvider>

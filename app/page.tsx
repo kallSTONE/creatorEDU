@@ -5,9 +5,22 @@ import ArticleGrid from '@/components/home/article-grid'
 import SuccessStories from '@/components/home/success-stories'
 import NewsletterSignup from '@/components/home/newsletter-signup'
 import HeroVideo from '@/components/home/HeroVideo'
+import { getSiteSettings } from '@/lib/site-settings'
 
+export const revalidate = 0
 
-export default function Home() {
+export default async function Home() {
+  const settings = await getSiteSettings()
+  const heroTitle =
+    settings?.hero_title ??
+    'ዲጂታል ክህሎቶን በማሳደግ የተጨማሪ ደምወዝ ተከፋይ ይሁኑ'
+  const heroSubtitle =
+    settings?.hero_subtitle ??
+    'Video Editing, Website Development, AI Fundamentals ስልጠናዎችን እንሰጣለን።'
+  const heroCtaText = settings?.hero_cta_text ?? 'Explore programs →'
+  const heroCtaLink = settings?.hero_cta_link ?? '/learn'
+  const heroVideoId = settings?.hero_video_id ?? 'mSs5scC7hsI'
+
   const companyLogos = [
     { file: 'Addis Ababa University Logo.png', name: 'Addis Ababa University' },
     { file: 'Amole Logo.png', name: 'Amole' },
@@ -36,11 +49,11 @@ export default function Home() {
         {/* Text */}
         <div className="z-10 py-6 text-center md:py-20 md:w-[55%]">
           <h1 className="font-montserrat text-3xl font-bold tracking-tight md:text-5xl lg:text-6xl select-none">
-            ዲጂታል ክህሎቶን በማሳደግ የተጨማሪ ደምወዝ ተከፋይ ይሁኑ
+            {heroTitle}
           </h1>
 
           <p className="mt-4 text-lg text-muted-foreground md:text-xl select-none">
-            Video Editing, Website Development, AI Fundamentals ስልጠናዎችን እንሰጣለን።
+            {heroSubtitle}
           </p>
 
           <div className="mt-6">
@@ -58,8 +71,8 @@ export default function Home() {
                 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:ring-offset-2
               "
             >
-              <TransitionLink href="/learn" className="relative z-10 px-8 py-4">
-                Explore programs →
+              <TransitionLink href={heroCtaLink} className="relative z-10 px-8 py-4">
+                {heroCtaText}
               </TransitionLink>
             </Button>
           </div>
@@ -68,7 +81,7 @@ export default function Home() {
 
         {/* Hero Video (desktop only) */}
         <div className="z-10 w-full justify-center py-12 md:flex">
-          <HeroVideo />
+          <HeroVideo videoId={heroVideoId} />
         </div>
 
         <div className="absolute inset-0 bg-gradient-to-r from-blue-900/10 via-background to-transparent" />

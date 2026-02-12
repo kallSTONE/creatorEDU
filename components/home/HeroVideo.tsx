@@ -9,7 +9,7 @@ declare global {
   }
 }
 
-export default function HeroVideo() {
+export default function HeroVideo({ videoId }: { videoId: string }) {
   const playerRef = useRef<any>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const [muted, setMuted] = useState(true)
@@ -31,12 +31,12 @@ export default function HeroVideo() {
     if (!containerRef.current) return
 
     playerRef.current = new window.YT.Player(containerRef.current, {
-      videoId: 'mSs5scC7hsI',
+      videoId,
       playerVars: {
         autoplay: 1,
         mute: 0,
         loop: 1,
-        playlist: 'mSs5scC7hsI',
+        playlist: videoId,
         controls: 0,
         rel: 0,
         modestbranding: 1,

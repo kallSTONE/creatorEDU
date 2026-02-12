@@ -13,6 +13,7 @@ import {
   FileText,
   BarChart3,
   ListChecks,
+  Palette,
 } from "lucide-react"
 import { useSupabase } from "@/components/providers/supabase-provider"
 import { useRouter } from "next/navigation"
@@ -33,6 +34,7 @@ export default function AdminLayout({
     { label: "Articles", href: "/admin/articles", icon: FileText },
     { label: "Revenue", href: "/admin/analytics", icon: BarChart3 },
     { label: "Quizzes", href: "/admin/quizzes", icon: ListChecks },
+    { label: "Customization", href: "/admin/customization", icon: Palette },
   ]
 
   // -------------------------
@@ -130,6 +132,7 @@ export default function AdminLayout({
         {/* Footer */}
         <div className="p-4 border-t border-sidebar-border space-y-2 bg-sidebar">
           <Button
+            asChild
             variant="ghost"
             className={`
               relative w-full flex items-center justify-center
@@ -140,10 +143,12 @@ export default function AdminLayout({
               before:bg-transparent hover:before:bg-primary
             `}
           >
-            <Settings size={20} className="flex-shrink-0" />
-            <span className="ml-3 hidden group-hover:inline-block whitespace-nowrap">
-              Settings
-            </span>
+            <TransitionLink href="/admin/customization">
+              <Settings size={20} className="flex-shrink-0" />
+              <span className="ml-3 hidden group-hover:inline-block whitespace-nowrap">
+                Settings
+              </span>
+            </TransitionLink>
           </Button>
 
           <Button
