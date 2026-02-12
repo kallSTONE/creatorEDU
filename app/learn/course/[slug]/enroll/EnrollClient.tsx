@@ -85,8 +85,6 @@ export default function EnrollClient({ slug }: { slug: string }) {
 
   const dummyInstructors: Instructor[] = [
     { id: 1, name: "Alice Johnson", role: "Lead Instructor", avatar: "../../../../public/assets/images/instructors/avatar.jpg" },
-    { id: 2, name: "Bob Smith", role: "Assistant Instructor", avatar: "/avatars/avatar2.jpg" },
-    { id: 3, name: "Carol Lee", role: "Guest Lecturer", avatar: "/avatars/avatar3.jpg" },
   ]
 
   const dummyReviews: Review[] = [
@@ -580,19 +578,21 @@ export default function EnrollClient({ slug }: { slug: string }) {
                 ወደ ስልጠናው ቀጥል
               </Button>
             ) : (
-              <Button
-                onClick={handleEnrollClick}
-                className="w-full text-lg font-semibold shadow-[0_2px_8px_rgba(37,99,235,0.4)]"
-                disabled={status === "checking"}
-              >
-                {status === "checking" ? (
-                  <span className="flex items-center justify-center gap-2">
-                    <Loader2 className="h-5 w-5 animate-spin" /> Processing...
-                  </span>
-                ) : (
-                  "ስልጠናውር ለመጀመር"
-                )}
-              </Button>
+              (!user || user?.user_metadata?.role === 'lawyer') && (
+                <Button
+                  onClick={handleEnrollClick}
+                  className="w-full text-lg font-semibold shadow-[0_2px_8px_rgba(37,99,235,0.4)]"
+                  disabled={status === "checking"}
+                >
+                  {status === "checking" && user?.user_metadata?.role == 'lawyer' ? (
+                    <span className="flex items-center justify-center gap-2">
+                      <Loader2 className="h-5 w-5 animate-spin" /> Processing...
+                    </span>
+                  ) : (
+                    "ስልጠናውር ለመጀመር"
+                  )}
+                </Button>
+              )
             )}
 
             {user && user?.user_metadata?.role !== 'lawyer' && !isEnrolled && (

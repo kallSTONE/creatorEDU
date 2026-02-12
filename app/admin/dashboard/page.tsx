@@ -22,7 +22,7 @@ const defaultDashboard = {
     { label: "Total Students", value: "1,234", change: "+12%", icon: "👥" },
     { label: "Active Courses", value: "24", change: "+3%", icon: "📚" },
     { label: "Published Articles", value: "156", change: "+8%", icon: "📝" },
-    { label: "Total Revenue", value: "$45,231", change: "+23%", icon: "💰" },
+    { label: "Total Revenue", value: "ETB 145,231", change: "+23%", icon: "💰" },
   ],
   enrollmentTrend: [
     { month: "Jan", students: 400, courses: 240 },

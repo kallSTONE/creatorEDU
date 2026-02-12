@@ -261,7 +261,7 @@ export default function LessonPage() {
       {/* Main Content */}
       <div className="flex flex-col md:flex-row flex-1 items:center md:justify-center overflow-scroll md:overflow-hidden">
         {/* Sidebar */}
-        <div className="w-[22%] hidden md:block border-r border-border overflow-hidden">
+        <div className="hidden md:block overflow-hidden">
           <LessonSidebar
             courseData={courseData}
             currentLessonId={currentLessonId}
@@ -296,7 +296,7 @@ export default function LessonPage() {
         </div>
 
         {/* Tesfa Assistant */}
-        <div className="w-[22%] border-l border-border overflow-hidden">
+        <div className="overflow-hidden">
           <TesfaAssistant />
         </div>
       </div>

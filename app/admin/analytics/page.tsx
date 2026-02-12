@@ -79,7 +79,7 @@ export default function AnalyticsPage() {
           <CardContent className="pt-6">
             <div>
               <p className="text-muted-foreground text-sm">Total Revenue</p>
-              <p className="text-3xl font-bold text-foreground mt-2">$40,700</p>
+              <p className="text-3xl font-bold text-foreground mt-2">ETB 240,700</p>
               <p className="text-xs text-green-600 mt-2">+12% from last month</p>
             </div>
           </CardContent>
